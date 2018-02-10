@@ -1,0 +1,5 @@
+commit 7b6dde8b243635268bcd089c5ac7003aac1e5593 (HEAD -> master)
+Author: Alexandra Gushchenskova <skowa98@gmail.com>
+Date:   Sat Feb 10 17:49:25 2018 +0300
+
+    add .gitignore

@@ -1,0 +1,292 @@
+@charset "utf-8";
+body {
+  margin: 0 auto;
+}
+
+#wrapperHeader {
+  height: 60px;
+  border-bottom: solid 1px #715ea8;
+}
+
+#header {
+  position: relative;
+  height: 60px;
+  width: 1050px;
+  margin: 0 auto;
+  border-bottom: solid 1px #715ea8;
+}
+
+.logo {
+  font: normal 48px ArBonnie;
+  color: #715ea8;
+  width: 220px;
+}
+
+#header .logo {
+  position: absolute;
+  margin-top: 10px;
+  height: 48px;
+}
+
+#header p, a {
+  font: normal 21px Calibri;
+  color: #715ea8;
+  text-decoration: none;
+}
+
+#authorsName {
+  width: 180px;
+  height: 21px;
+  top: -3px;
+  left: 350px;
+  position: absolute;
+}
+
+#quit {
+  width: 75px;
+  height: 21px;
+  top: 18px;
+  right: 0px;
+  position: absolute;
+}
+
+#addPhotoIcon {
+  position: absolute;
+  height: 80%;
+  width: 50px;
+  top: 6px;
+  right: 300px;
+  background-image: url(../img/addPhoto.png);
+  background-repeat: no-repeat;
+}
+
+#news {
+  margin: 0 auto;
+  width: 1050px;
+  height: 2880px;
+  border-left: solid 1px #715ea8;
+  border-right: solid 1px #715ea8;
+  position: relative;
+}
+
+#filtr {
+  width: 250px;
+  font: normal 25px Calibri;
+  color: #3e404b;
+  left: 10px;
+  position: absolute;
+}
+
+#filtr input[type="text"], input[type="date"] {
+  height: 30px;
+  font: normal 17px Calibri;
+  margin-top: 3px;
+  color: #686972
+}
+
+#filtr input[type="checkbox"] {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+#list {
+  left: 0px;
+}
+
+#filtr li {
+  list-style-type: none;
+  margin-left: -35px;
+}
+
+#filtr label {
+  font: normal 23px Calibri;
+  color: #3e404b;
+}
+
+#filtr input[type=submit] {
+  padding: 3px 12px;
+  background: #ccc;
+  border: 0 none;
+  cursor: pointer;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.photo {
+  width: 730px;
+  height: 250px;
+  position: relative;
+  left: 260px;
+  padding-top: 30px;
+}
+
+.photo h1 {
+  font: normal 27px Calibri;
+  color: #3e404b;
+  position: absolute;
+  top: -15px;
+}
+
+.photo h3 {
+  font: normal 15px Calibri;
+  color: #3e404b;
+  position: absolute;
+  top: -5px;
+  right: 5px;
+}
+
+.photo p {
+  font: normal 21px Calibri;
+  color: #3e404b;
+  position: absolute;
+}
+
+.photoDescription {
+  top: 65px;
+  left: 10px;
+}
+
+.photoTags {
+  top: 125px;
+  left: 10px;
+}
+
+.like {
+  height: 30px;
+  width: 80px;
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  background-image: url(../img/like.png);
+  background-repeat: no-repeat;
+}
+
+.like p {
+  position: absolute;
+  bottom: -18px;
+  left: 35px;
+}
+
+.delete {
+  height: 35px;
+  width: 30px;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  background-image: url(../img/delete.png);
+  background-repeat: no-repeat;
+}
+
+.edit {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  right: 50px;
+  bottom: 5px;
+  background-image: url(../img/edit.png);
+  background-repeat: no-repeat;
+}
+
+.contentPhoto {
+  position: absolute;
+  border-top: solid 1px #715ea8;
+  border-bottom: solid 1px #715ea8;
+  border-right: solid 1px #715ea8;
+  width: 480px;
+  height: 248px;
+  left: 250px;
+}
+
+#photo1Img, #photo2Img, #photo3Img {
+  position: absolute;
+  height: 250px;
+  width: 250px;
+  float: left;
+}
+
+#photo1Img {
+  background-image: url(../img/photo1.jpg);
+  background-repeat: no-repeat;
+}
+
+#photo2Img {
+  background-image: url(../img/photo2.jpg);
+  background-repeat: no-repeat;
+}
+
+#photo3Img {
+  background-image: url(../img/photo3.jpg);
+  background-repeat: no-repeat;
+}
+
+#morePhotos {
+  position: absolute;
+  text-decoration: none;
+  border: dashed 3px #715ea8;
+  width: 350px;
+  height: 30px;
+  border-radius: 100%/20%;
+  -webkit-border-radius: 100%/20%;
+  font: normal 25px Calibri;
+  color: #3e404b;
+  padding-left: 15px;
+  margin-left: 350px;
+  margin-top: 20px;
+}
+
+#wrapperFooter {
+  background-color: #715ea8;
+}
+
+#footer {
+  position: relative;
+  height: 60px;
+  width: 1050px;
+  margin: 0 auto;
+  background-color: #715ea8;
+}
+
+#footer .logo {
+  color: #272628;
+  margin: 0 auto;
+  height: 48px;
+  top: 5px;
+  position: absolute;
+  left: 5px;
+}
+
+#devName {
+  margin: 0 auto;
+  position: absolute;
+  font: normal 18px Calibri;
+  color: #272628;
+  top: 10px;
+  left: 300px;
+}
+
+#devEmail {
+  position: absolute;
+  margin: 0 auto;
+  font: normal 25px Calibri;
+  color: #272628;
+  top: 13px;
+  left: 600px;
+}
+
+#lastEdit {
+  position: absolute;
+  font: normal 14px Calibri;
+  color: #272628;
+  bottom: -10px;
+  right: 10px;
+  text-align: right;
+}
+
+@font-face {
+  font-family: "ArBonnie";
+  src: url("../fonts/ARBONNIE.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}

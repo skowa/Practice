@@ -3,12 +3,12 @@ body {
   margin: 0 auto;
 }
 
-#wrapperHeader {
+.wrapperHeader {
   height: 60px;
   border-bottom: solid 1px #715ea8;
 }
 
-#header {
+.header {
   position: relative;
   height: 60px;
   width: 1050px;
@@ -22,19 +22,19 @@ body {
   width: 220px;
 }
 
-#header .logo {
+.header .logo {
   position: absolute;
   margin-top: 10px;
   height: 48px;
 }
 
-#header p, a {
+.header p, a {
   font: normal 21px Calibri;
   color: #715ea8;
   text-decoration: none;
 }
 
-#authorsName {
+.authorsName {
   width: 180px;
   height: 21px;
   top: -3px;
@@ -42,7 +42,7 @@ body {
   position: absolute;
 }
 
-#quit {
+.quit {
   width: 75px;
   height: 21px;
   top: 18px;
@@ -50,7 +50,7 @@ body {
   position: absolute;
 }
 
-#addPhotoIcon {
+.addPhotoIcon {
   position: absolute;
   height: 80%;
   width: 50px;
@@ -60,7 +60,7 @@ body {
   background-repeat: no-repeat;
 }
 
-#news {
+.news {
   margin: 0 auto;
   width: 1050px;
   height: 2880px;
@@ -69,7 +69,7 @@ body {
   position: relative;
 }
 
-#filtr {
+.filtr {
   width: 250px;
   font: normal 25px Calibri;
   color: #3e404b;
@@ -77,35 +77,35 @@ body {
   position: absolute;
 }
 
-#filtr input[type="text"], input[type="date"] {
+.filtr input[type="text"], input[type="date"] {
   height: 30px;
   font: normal 17px Calibri;
   margin-top: 3px;
   color: #686972
 }
 
-#filtr input[type="checkbox"] {
+.filtr input[type="checkbox"] {
   position: relative;
   width: 15px;
   height: 15px;
   cursor: pointer;
 }
 
-#list {
+.list {
   left: 0px;
 }
 
-#filtr li {
+.filtr li {
   list-style-type: none;
   margin-left: -35px;
 }
 
-#filtr label {
+.filtr label {
   font: normal 23px Calibri;
   color: #3e404b;
 }
 
-#filtr input[type=submit] {
+.filtr input[type=submit] {
   padding: 3px 12px;
   background: #ccc;
   border: 0 none;
@@ -221,7 +221,7 @@ body {
   background-repeat: no-repeat;
 }
 
-#morePhotos {
+.morePhotos {
   position: absolute;
   text-decoration: none;
   border: dashed 3px #715ea8;
@@ -236,11 +236,11 @@ body {
   margin-top: 20px;
 }
 
-#wrapperFooter {
+.wrapperFooter {
   background-color: #715ea8;
 }
 
-#footer {
+.footer {
   position: relative;
   height: 60px;
   width: 1050px;
@@ -248,7 +248,7 @@ body {
   background-color: #715ea8;
 }
 
-#footer .logo {
+.footer .logo {
   color: #272628;
   margin: 0 auto;
   height: 48px;
@@ -257,7 +257,7 @@ body {
   left: 5px;
 }
 
-#devName {
+.devName {
   margin: 0 auto;
   position: absolute;
   font: normal 18px Calibri;
@@ -266,7 +266,7 @@ body {
   left: 300px;
 }
 
-#devEmail {
+.devEmail {
   position: absolute;
   margin: 0 auto;
   font: normal 25px Calibri;
@@ -275,7 +275,7 @@ body {
   left: 600px;
 }
 
-#lastEdit {
+.lastEdit {
   position: absolute;
   font: normal 14px Calibri;
   color: #272628;

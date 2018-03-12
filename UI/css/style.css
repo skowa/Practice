@@ -60,7 +60,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.news {
+.wrapperContent {
   margin: 0 auto;
   width: 1050px;
   height: 2880px;
@@ -199,26 +199,11 @@ body {
   left: 250px;
 }
 
-#photo1Img, #photo2Img, #photo3Img {
+.photoImg img{
   position: absolute;
   height: 250px;
   width: 250px;
   float: left;
-}
-
-#photo1Img {
-  background-image: url(../img/photo1.jpg);
-  background-repeat: no-repeat;
-}
-
-#photo2Img {
-  background-image: url(../img/photo2.jpg);
-  background-repeat: no-repeat;
-}
-
-#photo3Img {
-  background-image: url(../img/photo3.jpg);
-  background-repeat: no-repeat;
 }
 
 .morePhotos {

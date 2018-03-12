@@ -8,170 +8,40 @@
 </head>
 
 <body>
-	<script src = "js/script.js"></script>
   <div class="wrapperHeader">
     <div class="header">
-      <h1 class="logo">PHOTOGALLERY</h1>
-      <p class="authorsName">@AUTHOR'S_NAME</p>
-      <a href="#" class="quit">ВЫЙТИ</a>
-      <a href="#" class="addPhotoIcon"> </a>
+
     </div>
   </div>
-  <div class="news">
-    <div class="filtr">
-      <ul class="list">
-        <li>Фильтровать по:</li>
-        <li>
-          <input id="cdate" type="checkbox" name="date">
-          <label for="cdate">дате добавления</label>
-        </li>
-        <li>
-          <input id="cauthor" type="checkbox" name="author">
-          <label for="cauthor">автору</label>
-        </li>
-        <li>
-          <input id="ctag" type="checkbox" name="tag">
-          <label for="ctag">хештегам</label>
-        </li>
-        <li>
-          <input type="submit" value="OK" />
-        </li>
-      </ul>
-      <form>
-        Дата: <br>
-        <input type="date" name="calendar" value="24/02/2018">
-        <br> Автор: <br>
-        <input type="text" name="author" placeholder="Автор">
-        <br> Хештег: <br>
-        <input type="text" name="tag" placeholder="Хештег">
-      </form>
-    </div>
-    <div class="photo">
-      <div id="photo1Img"></div>
-      <div class="contentPhoto">
-        <h1>Ваша публикация</h1>
-        <h3>24/02/2018<br />21:12</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>115</p>
-        </a>
-        <a href="#" class="delete"></a>
-        <a href="#" class="edit"></a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo2Img"></div>
-      <div class="contentPhoto">
-        <h1>@Author1</h1>
-        <h3>24/02/2018<br />14:42</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>100</p>
-        </a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo3Img"></div>
-      <div class="contentPhoto">
-        <h1>Ваша публикация</h1>
-        <h3>23/02/2018<br />20:12</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>45</p>
-        </a>
-        <a href="#" class="delete"></a>
-        <a href="#" class="edit"></a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo1Img"></div>
-      <div class="contentPhoto">
-        <h1>@Author2</h1>
-        <h3>22/02/2018<br />21:12</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>650</p>
-        </a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo2Img"></div>
-      <div class="contentPhoto">
-        <h1>@Author3</h1>
-        <h3>22/02/2018<br />15:12</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>56</p>
-        </a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo1Img"></div>
-      <div class="contentPhoto">
-        <h1>Ваша публикация</h1>
-        <h3>22/02/2018<br />11:12</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>199</p>
-        </a>
-        <a href="#" class="delete"></a>
-        <a href="#" class="edit"></a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo2Img"></div>
-      <div class="contentPhoto">
-        <h1>@Author4</h1>
-        <h3>21/02/2018<br />14:42</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>80</p>
-        </a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo3Img"></div>
-      <div class="contentPhoto">
-        <h1>Ваша публикация</h1>
-        <h3>21/02/2018<br />12:33</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>145</p>
-        </a>
-        <a href="#" class="delete"></a>
-        <a href="#" class="edit"></a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo1Img"></div>
-      <div class="contentPhoto">
-        <h1>@Author5</h1>
-        <h3>20/02/2018<br />21:12</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>200</p>
-        </a>
-      </div>
-    </div>
-    <div class="photo">
-      <div id="photo2Img"></div>
-      <div class="contentPhoto">
-        <h1>@Author6</h1>
-        <h3>20/02/2018<br />15:12</h3>
-        <p class="photoDescription">Здесь находится описание фотографии</p>
-        <p class="photoTags">#Здесь #находятся #хештеги</p>
-        <a href="#" class="like">
-          <p>31</p>
-        </a>
+  <div class="wrapperContent">
+    <div class="news">
+      <div class="filtr">
+        <ul class="list">
+          <li>Фильтровать по:</li>
+          <li>
+            <input id="cdate" type="checkbox" name="date">
+            <label for="cdate">дате добавления</label>
+          </li>
+          <li>
+            <input id="cauthor" type="checkbox" name="author">
+            <label for="cauthor">автору</label>
+          </li>
+          <li>
+            <input id="ctag" type="checkbox" name="tag">
+            <label for="ctag">хештегам</label>
+          </li>
+          <li>
+            <input type="submit" value="OK" />
+          </li>
+        </ul>
+        <form>
+          Дата: <br>
+          <input type="date" name="calendar" value="24/02/2018">
+          <br> Автор: <br>
+          <input type="text" name="author" placeholder="Автор">
+          <br> Хештег: <br>
+          <input type="text" name="tag" placeholder="Хештег">
+        </form>
       </div>
     </div>
     <a href="#" class="morePhotos">Загрузить следующие 10 фото</a>
@@ -184,6 +54,8 @@
       <p class="lastEdit">Последнее изменение:<br />26/02/2018</p>
     </div>
   </div>
+  <script src = "js/script.js"></script>
+  <script src = "js/DOM.js"></script>
 </body>
 
 </html>

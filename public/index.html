@@ -16,35 +16,21 @@
   <div class="wrapperContent">
     <div class="news">
       <div class="filtr">
-        <ul class="list">
-          <li>Фильтровать по:</li>
-          <li>
-            <input id="cdate" type="checkbox" name="date">
-            <label for="cdate">дате добавления</label>
-          </li>
-          <li>
-            <input id="cauthor" type="checkbox" name="author">
-            <label for="cauthor">автору</label>
-          </li>
-          <li>
-            <input id="ctag" type="checkbox" name="tag">
-            <label for="ctag">хештегам</label>
-          </li>
-          <li>
-            <input type="submit" value="OK" />
-          </li>
-        </ul>
         <form>
           Дата: <br>
-          <input type="date" name="calendar" value="24/02/2018">
+          <input id="date" type="date" name="calendar" placeholder="24/02/2018">
           <br> Автор: <br>
-          <input type="text" name="author" placeholder="Автор">
+          <input id="author" type="text" name="author" placeholder="Автор">
           <br> Хештег: <br>
-          <input type="text" name="tag" placeholder="Хештег">
+          <input id="tag" type="text" name="tag" placeholder="Хештег">
+
         </form>
+        <input id="OK" type="submit" value="OK" />
       </div>
     </div>
-    <a href="#" class="morePhotos">Загрузить следующие 10 фото</a>
+    <button class="morePhotos" title="more"><p>
+      Загрузить следующие фото
+    </p></button>
   </div>
   <div class="wrapperFooter">
     <div class="footer">
@@ -56,6 +42,8 @@
   </div>
   <script src = "js/script.js"></script>
   <script src = "js/DOM.js"></script>
+  <script src = "js/event.js"></script>
+  <script src = "js/Header.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 ;(function(arr) {
-    var photoPosts = [
+    let photoPosts = [
         {
             id: "1",
             description: "На второй день нашего путешествия мы ездили в Люцерн.",
@@ -7,7 +7,8 @@
             author: "skowik",
             hashtags: ["#Luzern", "#Switzerland", "#travel"],
             likes: ["viviBo", "alexSommver", "marinaGo12"],
-            photoLink: "img/photo1.jpg"
+            photoLink: "img/photo1.jpg",
+            isDeleted: false
         },
         {
             id: "2",
@@ -16,7 +17,8 @@
             author: "skowik",
             hashtags: ["#Pilates", "#Switzerland", "#travel", "#mountain"],
             likes: ["viviBo", "alexSommver", "ira2903"],
-            photoLink: "img/photo2.jpg"
+            photoLink: "img/photo2.jpg",
+            isDeleted: false
         },
         {
             id: "3",
@@ -25,7 +27,8 @@
             author: "viviBo",
             likes: ["skowik", "alexSommver", "marinaGo12", "ira2903"],
             hashtags: ["#nature", "#animal", "#giraffe"],
-            photoLink: "img/photo3.jpg"
+            photoLink: "img/photo3.jpg",
+            isDeleted: false
         },
         {
             id: "4",
@@ -34,7 +37,8 @@
             author: "ira2903",
             hashtags: ["#winter", "#sun", "#beauty", "#nature"],
             likes: ["tanya0023", "alexSommver", "marinaGo12", "skowik"],
-            photoLink: "img/photo4.jpg"
+            photoLink: "img/photo4.jpg",
+            isDeleted: false
         },
         {
             id: "5",
@@ -42,8 +46,9 @@
             createdAt: new Date("2018-02-28T22:44:00"),
             author: "viviBo",
             hashtags: ["#nature", "#lizard", "#animal"],
-            likes: ["tanya0023", "alexSommver", "marinaGo12", "skowik", "ira2903"],
-            photoLink: "img/photo5.jpg"
+            likes: ["tanya0023", "alexSommver", "marinaGo12", "ira2903"],
+            photoLink: "img/photo5.jpg",
+            isDeleted: false
         },
         {
             id: "6",
@@ -52,7 +57,8 @@
             author: "tanya0023",
             hashtags: ["#cat", "#animal"],
             likes: ["viviBo", "alexSommver", "marinaGo12", "ira2903"],
-            photoLink: "img/photo6.jpg"
+            photoLink: "img/photo6.jpg",
+            isDeleted: false
         },
         {
             id: "7",
@@ -61,7 +67,8 @@
             author: "skowik",
             hashtags: ["#waterfall", "#Switzerland", "#travel"],
             likes: ["tanya0023", "alexSommver", "marinaGo12", "viviBo", "ira2903"],
-            photoLink: "img/photo7.jpg"
+            photoLink: "img/photo7.jpg",
+            isDeleted: false
         },
         {
             id: "8",
@@ -70,7 +77,8 @@
             author: "ira2903",
             hashtags: ["#flower", "#nature", "#summer"],
             likes: ["tanya0023", "alexSommver", "skowik"],
-            photoLink: "img/photo8.jpg"
+            photoLink: "img/photo8.jpg",
+            isDeleted: false
         },
         {
             id: "9",
@@ -79,7 +87,8 @@
             author: "alexSommver",
             hashtags: ["#nature", "#bird"],
             likes: ["tanya0023", "greatGuy", "marinaGo12", "skowik", "ira2903"],
-            photoLink: "img/photo9.jpg"
+            photoLink: "img/photo9.jpg",
+            isDeleted: false
         },
         {
             id: "10",
@@ -88,7 +97,8 @@
             author: "tanya0023",
             hashtags: ["#cat", "#animal"],
             likes: ["viviGo", "alexSommver", "marinaGo12", "skowik", "ira2903"],
-            photoLink: "img/photo10.jpg"
+            photoLink: "img/photo10.jpg",
+            isDeleted: false
         },
         {
             id: "11",
@@ -97,7 +107,8 @@
             author: "skowik",
             hashtags: ["#Italy", "#Milan", "#travel", "#nature"],
             likes: ["tanya0023", "alexSommver", "marinaGo12", "greatGuy", "ira2903"],
-            photoLink: "img/photo11.jpg"
+            photoLink: "img/photo11.jpg",
+            isDeleted: false
         },
         {
             id: "12",
@@ -106,7 +117,8 @@
             author: "alexSommver",
             hashtags: ["#nature", "#bird"],
             likes: ["tanya0023", "inkognito", "marinaGo12", "skowik", "ira2903", "lera33"],
-            photoLink: "img/photo12.jpg"
+            photoLink: "img/photo12.jpg",
+            isDeleted: false
         },
         {
             id: "13",
@@ -115,7 +127,8 @@
             author: "marinaGo12",
             hashtags: ["#nature", "#mountain", "#travel"],
             likes: ["tanya0023", "alexSommver", "skowik", "ira2903"],
-            photoLink: "img/photo13.jpg"
+            photoLink: "img/photo13.jpg",
+            isDeleted: false
         },
         {
             id: "14",
@@ -124,7 +137,8 @@
             author: "marinaGo12",
             hashtags: ["#USA", "#travel"],
             likes: ["tanya0023", "alexSommver", "greatGuy", "skowik", "ira2903"],
-            photoLink: "img/photo14.jpg"
+            photoLink: "img/photo14.jpg",
+            isDeleted: false
         },
         {
             id: "15",
@@ -133,7 +147,8 @@
             author: "viviBo",
             hashtags: ["#space", "#travel", "#USA"],
             likes: ["tanya0023", "alexSommver", "marinaGo12", "skowik", "ira2903", "ivanGu"],
-            photoLink: "img/photo15.jpg"
+            photoLink: "img/photo15.jpg",
+            isDeleted: false
         },
         {
             id: "16",
@@ -142,7 +157,8 @@
             author: "tanya0023",
             hashtags: ["#travel", "#Italy", "#beauty"],
             likes: ["alexSommver", "marinaGo12", "skowik", "ira2903"],
-            photoLink: "img/photo16.jpg"
+            photoLink: "img/photo16.jpg",
+            isDeleted: false
         },
         {
             id: "17",
@@ -151,7 +167,8 @@
             author: "alexSommver",
             hashtags: ["#nature", "#bird"],
             likes: ["tanya0023", "inkognito", "marinaGo12", "skowik", "ira2903"],
-            photoLink: "img/photo17.jpg"
+            photoLink: "img/photo17.jpg",
+            isDeleted: false
         },
         {
             id: "18",
@@ -160,7 +177,8 @@
             author: "marinaGo12",
             hashtags: ["#travel", "#Paris", "#summer"],
             likes: ["tanya0023", "alexSommver", "viviBo", "skowik", "ira2903"],
-            photoLink: "img/photo18.jpg"
+            photoLink: "img/photo18.jpg",
+            isDeleted: false
         },
         {
             id: "19",
@@ -169,7 +187,8 @@
             author: "marinaGo12",
             hashtags: ["#nature", "#England", "#travel"],
             likes: ["tanya0023", "alexSommver", "ira2903"],
-            photoLink: "img/photo19.jpg"
+            photoLink: "img/photo19.jpg",
+            isDeleted: false
         },
         {
             id: "20",
@@ -178,14 +197,15 @@
             author: "skowik",
             hashtags: ["#Switzerland", "#nature", "#travel"],
             likes: ["tanya0023", "alexSommver", "marinaGo12", "viviBo", "greatGuy", "ira2903"],
-            photoLink: "img/photo20.jpg"
+            photoLink: "img/photo20.jpg",
+            isDeleted: false
         }
     ];
 
-    arr.getPhotoPosts = function getPhotoPosts(skip, top, filterConfig) {
-        var newPhotoPosts = [];
-
-        if (skip < 0 || skip >= photoPosts.length || skip === undefined) {
+    arr.getPhotoPosts = function getPhotoPosts(givenArray, skip, top, filterConfig) {
+        let newPhotoPosts = [];
+        let array = givenArray.filter(function (photoPost) { return photoPost.isDeleted === false });
+        if (skip < 0 || skip >= array.length || skip === undefined) {
             skip = 0;
         }
 
@@ -193,16 +213,16 @@
             top = 10;
         }
 
-        var flag = false;
+        let flag = false;
         if (filterConfig !== undefined) {
-            if ("author" in filterConfig) {
-                newPhotoPosts = photoPosts.filter(function (photoPost) { return photoPost.author === filterConfig.author });
+            if ("author" in filterConfig  && filterConfig.author !== null) {
+                newPhotoPosts = array.filter(function (photoPost) { return photoPost.author === filterConfig.author });
                 flag = true;
             }
 
-            if ("hashtags" in filterConfig) {
+            if ("hashtags" in filterConfig && filterConfig.hashtags !== null) {
                 if (!flag) {
-                    newPhotoPosts = filterByHashTags(photoPosts, filterConfig.hashtags);
+                    newPhotoPosts = filterByHashTags(array, filterConfig.hashtags);
                     flag = true;
                 }
                 else {
@@ -210,39 +230,39 @@
                 }
             }
 
-            if ("createdAt" in filterConfig) {
+            if ("createdAt" in filterConfig  && filterConfig.createdAt !== null) {
                 if (!flag) {
-                    newPhotoPosts = photoPosts.filter(function (photoPost) {
-                        return photoPost.createdAt <= filterConfig.createdAt
+                    newPhotoPosts = array.filter(function (photoPost) {
+                        return new Date(photoPost.createdAt) <= filterConfig.createdAt
                     });
                 }
                 else {
                     newPhotoPosts = newPhotoPosts.filter(function (photoPost) {
-                        return photoPost.createdAt <= filterConfig.createdAt
+                        return new Date(photoPost.createdAt) <= filterConfig.createdAt
                     });
                 }
             }
             newPhotoPosts = newsPost.sortByDate(newPhotoPosts).slice(skip, skip + top);
         }
         else {
-            newPhotoPosts = newsPost.sortByDate(photoPosts).slice(skip, skip + top);
+            newPhotoPosts = newsPost.sortByDate(array).slice(skip, skip + top);
         }
 
         return newPhotoPosts;
     }
 
     arr.sortByDate = function sortByDate(array) {
-        return array.sort(function (a, b) { return b.createdAt - a.createdAt });
+        return array.sort(function (a, b) { return new Date(b.createdAt) - new Date(a.createdAt) });
     }
 
     function filterByHashTags(array, hashtags) {
-        if (hashtags === undefined
+        if (hashtags === undefined ||hashtags === null
             || hashtags.length === 0) {
             return [];
         }
 
-        var newArray = array;
-        for (var i = 0; i < hashtags.length; i++) {
+        let newArray = array;
+        for (let i = 0; i < hashtags.length; i++) {
             newArray = findHashTag(newArray, hashtags[i]);
         }
 
@@ -254,9 +274,9 @@
             return [];
         }
 
-        var newArray = [];
+        let newArray = [];
 
-        for(var j = 0; j < array.length; j++) {
+        for(let j = 0; j < array.length; j++) {
             if (array[j].hashtags.indexOf(hashtag) !== -1) {
                 newArray.push(array[j]);
             }
@@ -265,20 +285,20 @@
         return newArray;
     }
 
-    arr.getPhotoPost = function getPhotoPost(id) {
+    arr.getPhotoPost = function getPhotoPost(array, id) {
         if (id === undefined) {
             return null;
         }
 
-        for (var i = 0; i < photoPosts.length; i++) {
-            if (photoPosts[i].id === id) {
-                return photoPosts[i];
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].id === id) {
+                return array[i];
             }
         }
 
         return null;
     }
-    
+
     function validatePhotoPost(photoPost) {
         if (photoPost.id === undefined) {
             return false;
@@ -308,7 +328,7 @@
             return false;
         }
 
-        for (var i = 0; i < photoPost.hashtags.length; i++) {
+        for (let i = 0; i < photoPost.hashtags.length; i++) {
             if (photoPost.hashtags[i].length >= 20) {
                 return false;
             }
@@ -317,35 +337,36 @@
         return true;
     }
 
-    arr.addPhotoPost = function addPhotoPost(photoPost) {
+    arr.addPhotoPost = function addPhotoPost(array, photoPost) {
         if (photoPost === undefined ||
             !validatePhotoPost(photoPost) ||
-            newsPost.getPhotoPost(photoPost.id) !== null) {
+            newsPost.getPhotoPost(array, photoPost.id) !== null) {
             return false;
         }
 
-        photoPosts.push(photoPost);
+        array.push(photoPost);
         return true;
     }
 
-    arr.editPhotoPost = function editPhotoPost(id, photoPost) {
+    arr.editPhotoPost = function editPhotoPost(array, id, photoPost) {
         if (id === undefined || photoPost === undefined) {
             return false;
         }
 
-        var editedPhotoPost = newsPost.getPhotoPost(id);
+        let editedPhotoPost = newsPost.getPhotoPost(array, id);
         if (editedPhotoPost === null) {
             return false;
         }
 
-        for (var i = 0; i < photoPosts.length; i++) {
-            if (id === photoPosts[i].id) {
-                var editedPhotoPostIndex = i;
+        let editedPhotoPostIndex;
+        for (let i = 0; i < array.length; i++) {
+            if (id === array[i].id) {
+                editedPhotoPostIndex = i;
                 break;
             }
         }
 
-        var flag = false;
+        let flag = false;
 
         if (photoPost.description !== undefined) {
             editedPhotoPost.description = photoPost.description;
@@ -359,9 +380,13 @@
             editedPhotoPost.hashtags = photoPost.hashtags;
             flag = true;
         }
+        if (photoPost.likes !== undefined) {
+            editedPhotoPost.hashtags = photoPost.hashtags;
+            flag = true;
+        }
 
         if(validatePhotoPost(editedPhotoPost) && flag) {
-            photoPosts[editedPhotoPostIndex] = editedPhotoPost;
+            array[editedPhotoPostIndex] = editedPhotoPost;
             return true;
         }
 
@@ -369,155 +394,28 @@
 
     }
 
-    arr.removePhotoPost = function removePhotoPost(id) {
+    arr.removePhotoPost = function removePhotoPost(array, id) {
         if (id === undefined) {
             return false;
         }
 
-        for (var i = 0; i < photoPosts.length; i++)
-            if (photoPosts[i].id === id) {
-                photoPosts.splice(i, 1);
+        for (let i = 0; i < array.length; i++)
+            if (array[i].id === id) {
+                array[i].isDeleted = true;
+                --arr.photoAm;
                 return true;
-            }
+        }
 
         return false;
     }
 
-    function showOnConsole() {
-        console.group("getPhotoPosts method:");
-        console.log("Showing, how sorting by date works:");
-        console.log(newsPost.sortByDate(photoPosts));
-        console.log("\nWithout parameters: (expected: first 10 posts sorted by date:)");
-        console.log(newsPost.getPhotoPosts());
-        console.log("\nSkip = 3: (expected: 10 posts from 4 to 13)");
-        console.log(newsPost.getPhotoPosts(3));
-        console.log("\nSkip = 4, top = 12: (expected: 12 posts from 5 to 16)");
-        console.log(newsPost.getPhotoPosts(4, 12));
-        console.log("\nSkip = 4, top = 20: (expected: 16 posts from 5 to 20)");
-        console.log(newsPost.getPhotoPosts(4, 20));
-        console.log("\nfilterConfig = {author: 'viviBo'}: (expected: sorted by date posts by viviBo (3 posts))");
-        console.log(newsPost.getPhotoPosts(0, 10, {author: "viviBo"}));
-        console.log("\nfilterConfig = {hashtags: ['#nature', '#travel']}: (expected: 4 posts)");
-        console.log(newsPost.getPhotoPosts(0, 10, {hashtags: ['#nature', '#travel']}));
-        console.log("\nfilterConfig = {createdAt: '2018-02-25T13:15:06'}: (expected: 9 posts )");
-        console.log(newsPost.getPhotoPosts(0, 10, {createdAt: new Date ("2018-02-25T13:15:06")}));
-        console.log("\nfilterConfig = {skip = 1,top = 2, author: \"skowik\", hashtags: [\"#Switzerland\"]}: (expected: 2 posts)");
-        console.log(newsPost.getPhotoPosts(1, 2, {author: "skowik", hashtags: ["#Switzerland"]}));
-        console.groupEnd();
+    let allPosts = JSON.parse(localStorage.getItem("AllPosts"));
+    arr.photoAm = photoPosts.length;
+    if(allPosts === null) {
+        localStorage.setItem("AllPosts", JSON.stringify(photoPosts));
+      }
+    else {
+        arr.photoAm = allPosts.filter(function (photoPost) { return photoPost.isDeleted === false }).length;
+      }
 
-        console.group("\n\ngetPhotoPost method");
-        console.log("Post with id = 3");
-        console.log(newsPost.getPhotoPost("3"));
-        console.log("\nPost with id = 29(expected: null)");
-        console.log(newsPost.getPhotoPost("29"));
-        console.groupEnd();
-
-        console.group("\n\nvalidatePhotoPost method");
-        console.log("Return true :");
-        console.log(validatePhotoPost( {
-            id: "2",
-            description: "description",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "tayl3",
-            likes: ["author1", "author2"],
-            hashtags: ["#tag1", "#tag2"],
-            photoLink: "asdfghjk"}));
-        console.log("Return false, because the description is >= 200 : ");
-        console.log(validatePhotoPost( {
-            id: "2",
-            description: "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678902",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "tayl3",
-            likes: ["author1", "author2"],
-            hashtags: ["#tag1", "#tag2"],
-            photoLink: "asdfghjk"}));
-        console.log("Return false, because author length is 0:");
-        console.log(validatePhotoPost( {
-            id: "2",
-            description: "some text",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "",
-            likes: ["author1", "author2"],
-            hashtags: ["#tag1", "#tag2"],
-            photoLink: "asdfghjk"}));
-        console.log('Return false, because photoLink length is 0 : ');
-        console.log(validatePhotoPost( {
-            id: "2",
-            description: "some text",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "author",
-            likes: ["author1", "author2"],
-            hashtags: ["#tag1", "#tag2"],
-            photoLink: ""}));
-        console.log("Return false, because some hashtags are >= 20 symbols");
-        console.log(validatePhotoPost( {
-            id: "2",
-            description: "some text",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "author",
-            likes: ["author1", "author2"],
-            hashtags: ["#123456789012345678901", "#tag2"],
-            photoLink: ""}));
-        console.log('Return false, because of absence of some arguments: ');
-        console.log(validatePhotoPost( {
-            id: "2",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "author",
-            hashtags: ["#tag1", "#tag2"],
-            photoLink: ""}));
-        console.groupEnd();
-
-        console.group("\n\naddPhotoPost method:");
-        console.log("Return true(add post with id = 21) : ");
-        console.log(newsPost.addPhotoPost({
-            id: "21",
-            description: "some text",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "author",
-            likes: ["author1", "author2"],
-            hashtags: ["#tag1", "#tag2"],
-            photoLink: "../img/somePhoto"}));
-        console.log("Return false, because of validation(author length is 0) : ");
-        console.log(newsPost.addPhotoPost({
-            id: "22",
-            description: "some text",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "",
-            likes: ["author1", "author2"],
-            hashtags: ["#tag1", "#tag2"],
-            photoLink: "../img/somePhoto"}));
-        console.log("Return false, because post with this ID exists: ");
-        console.log(newsPost.addPhotoPost({
-            id: "2",
-            description: "some text",
-            createdAt: new Date('2018-02-03T12:00:00'),
-            author: "author",
-            likes: ["author1", "author2"],
-            hashtags: ["#tag1", "#tag2"],
-            photoLink: "../img/somePhoto"}));
-        console.groupEnd();
-
-        console.group("\n\neditPhotoPost method");
-        console.log("Return true: ");
-        console.log(newsPost.editPhotoPost("2", {description : "Люблю горы!"}));
-        console.log("PhotoPost with id = 2 after editing: ");
-        console.log(newsPost.getPhotoPost("2"));
-        console.log("Return false, because such post doesn't exist:");
-        console.log(newsPost.editPhotoPost('30', {photoLink : "alljhg"}));
-        console.log("Return false, because changeable parameters haven't been written:");
-        console.log(newsPost.editPhotoPost("2", {}));
-        console.log("Return false, because of validation(photoLink length is 0): ");
-        console.log(newsPost.editPhotoPost("2", {photoLink : ""}));
-        console.groupEnd();
-
-        console.group("\n\nremovePhotoPost method");
-        console.log("Return true(delete photoPost with id = 15): ");
-        console.log(newsPost.removePhotoPost("15"));
-        console.log("Return false, because there is no post ith such id:");
-        console.log(newsPost.removePhotoPost("34"));
-        console.groupEnd();
-
-    }
-
-    showOnConsole();
 }(this.newsPost = {}));

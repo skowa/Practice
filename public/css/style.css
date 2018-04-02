@@ -63,7 +63,7 @@ body {
 .wrapperContent {
   margin: 0 auto;
   width: 1050px;
-  height: 2880px;
+  min-height: calc(100vh - 120px);
   border-left: solid 1px #715ea8;
   border-right: solid 1px #715ea8;
   position: relative;
@@ -84,26 +84,6 @@ body {
   color: #686972
 }
 
-.filtr input[type="checkbox"] {
-  position: relative;
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
-}
-
-.list {
-  left: 0px;
-}
-
-.filtr li {
-  list-style-type: none;
-  margin-left: -35px;
-}
-
-.filtr label {
-  font: normal 23px Calibri;
-  color: #3e404b;
-}
 
 .filtr input[type=submit] {
   padding: 3px 12px;
@@ -119,7 +99,8 @@ body {
   height: 250px;
   position: relative;
   left: 260px;
-  padding-top: 30px;
+  padding-top: 20px;
+  padding-bottom: 10px;
 }
 
 .photo h1 {
@@ -144,12 +125,12 @@ body {
 }
 
 .photoDescription {
-  top: 65px;
+  top: 40px;
   left: 10px;
 }
 
 .photoTags {
-  top: 125px;
+  top: 135px;
   left: 10px;
 }
 
@@ -159,8 +140,13 @@ body {
   position: absolute;
   left: 5px;
   bottom: 5px;
-  background-image: url(../img/like.png);
   background-repeat: no-repeat;
+}
+
+.like img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 
 .like p {
@@ -170,6 +156,7 @@ body {
 }
 
 .delete {
+  border: none;
   height: 35px;
   width: 30px;
   position: absolute;
@@ -177,9 +164,20 @@ body {
   bottom: 5px;
   background-image: url(../img/delete.png);
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
+.delete:hover, .edit:hover{
+    color: #715ea8;
+}
+.delete:active, .edit:active{
+    color: #fff;
+}
+
+.delete:focus, .edit:focus {outline:none;}
+
 .edit {
+  border: none;
   height: 30px;
   width: 30px;
   position: absolute;
@@ -187,6 +185,7 @@ body {
   bottom: 5px;
   background-image: url(../img/edit.png);
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .contentPhoto {
@@ -199,7 +198,7 @@ body {
   left: 250px;
 }
 
-.photoImg img{
+.photoImg img {
   position: absolute;
   height: 250px;
   width: 250px;
@@ -207,7 +206,7 @@ body {
 }
 
 .morePhotos {
-  position: absolute;
+  cursor: pointer;
   text-decoration: none;
   border: dashed 3px #715ea8;
   width: 350px;
@@ -218,9 +217,28 @@ body {
   color: #3e404b;
   padding-left: 15px;
   margin-left: 350px;
-  margin-top: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0);
 }
 
+.morePhotos p
+{
+  margin: 0 auto;
+  margin-top: -5px;
+}
+
+.morePhotos:hover{
+    color: #715ea8;
+}
+
+.morePhotos:active{
+    color: #fff;
+}
+
+.morePhotos:focus {
+  outline:none;
+}
 .wrapperFooter {
   background-color: #715ea8;
 }
@@ -267,6 +285,15 @@ body {
   bottom: -10px;
   right: 10px;
   text-align: right;
+}
+
+#message {
+  position: absolute;
+  font: normal 25px Calibri;
+  color: #272628;
+  margin: 0 auto;
+  margin-left: 400px;
+  padding-bottom: 30px;
 }
 
 @font-face {

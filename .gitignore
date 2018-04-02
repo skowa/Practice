@@ -2,3 +2,5 @@
 .DS_Store/
 .idea/
 out/
+task2/
+node_modules/

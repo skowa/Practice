@@ -44,10 +44,24 @@ body {
 
 .quit {
   width: 75px;
-  height: 21px;
-  top: 18px;
   right: 0px;
   position: absolute;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  text-decoration: none;
+  border: none;
+}
+
+.quit:hover, .addPhotoIcon:hover{
+    color: #715ea8;
+}
+
+.quit:active, .addPhotoIcon:active{
+    color: #fff;
+}
+
+.quit:focus, .addPhotoIcon:focus {
+  outline:none;
 }
 
 .addPhotoIcon {
@@ -58,6 +72,10 @@ body {
   right: 300px;
   background-image: url(../img/addPhoto.png);
   background-repeat: no-repeat;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  text-decoration: none;
+  border: none;
 }
 
 .wrapperContent {

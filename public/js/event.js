@@ -1,12 +1,17 @@
-;
-(function() {
-  let moreButton = document.getElementsByClassName("morePhotos")[0];
-  let filterButton = document.getElementById("OK");
-  let likeButton = document.getElementsByClassName("like");
+;(function() {
+  let filterButton;
+  let likeButton;
+  let moreButton;
+  let authButton;
+  let quitButton;
   let deleteButton;
   let allPhotos = 0;
   let flag = false;
   let filterConfig;
+  let addButton;
+  let editButton;
+  let saveChangesButton;
+  let idToEdit = null;
 
   function moreShow() {
     if (!flag) {
@@ -22,28 +27,33 @@
     }
     likeAddHandler();
     deleteAddHandler();
+    editAddHandler();
   }
 
   function like(i) {
-    let id = likeButton[i].parentNode.parentNode.getAttribute("id").substring(4);
-    let posts = JSON.parse(localStorage.getItem("AllPosts"));
-    let post = newsPost.getPhotoPost(posts, id);
-    let index = post.likes.indexOf(dom.user);
-    let icon = "";
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user !== null) {
+      let id = likeButton[i].parentNode.parentNode.getAttribute("id").substring(4);
+      let posts = JSON.parse(localStorage.getItem("AllPosts"));
+      let post = newsPost.getPhotoPost(posts, id);
 
-    if (index === -1) {
-      post.likes.push(dom.user);
-      icon = "img/like.png";
-    } else {
-      post.likes.splice(index, 1);
-      icon = "img/noLike.png";
+      let index = post.likes.indexOf(user);
+      let icon = "";
+
+      if (index === -1) {
+        post.likes.push(user);
+        icon = "img/like.png";
+      } else {
+        post.likes.splice(index, 1);
+        icon = "img/noLike.png";
+      }
+
+      newsPost.editPhotoPost(id, post);
+      localStorage.setItem("AllPosts", JSON.stringify(posts));
+
+      likeButton[i].firstChild.src = icon
+      likeButton[i].children[1].innerHTML = post.likes.length;
     }
-
-    newsPost.editPhotoPost(id, post);
-    localStorage.setItem("AllPosts", JSON.stringify(posts));
-
-    likeButton[i].firstChild.src = icon
-    likeButton[i].children[1].innerHTML = post.likes.length;
   }
 
   function filter() {
@@ -79,17 +89,16 @@
         hashtags: tagFilter
       });
 
-
       hideMoreButton();
-      likeAddHandler();
-      deleteAddHandler();
-
       if (dom.postsAmount === 0) {
         loadFilterMsg("news");
       }
     } else {
       reloadMain();
     }
+    likeAddHandler();
+    deleteAddHandler();
+    editAddHandler();
   }
 
   function deletePhoto(i) {
@@ -115,7 +124,149 @@
 
       likeAddHandler();
       deleteAddHandler();
+      editAddHandler();
     }
+  }
+
+  function log() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user !== null) {
+      user = null;
+      localStorage.setItem("user", JSON.stringify(user));
+      header.fillHeader();
+      dom.clearMain();
+      dom.createMain();
+      dom.showPosts();
+      quitAddHandler();
+      moreButtonAddHandler();
+      filterAddHandler();
+    }
+    else {
+      dom.clearMain();
+      dom.createLogin();
+      authButton = document.getElementById("OK2");
+      authButton.addEventListener("click", authorize);
+    }
+  }
+
+  function authorize() {
+    let msg = document.getElementById("message");
+    if (msg) {
+      document.getElementsByClassName("formLog")[0].removeChild(msg);
+    }
+
+    let form = document.getElementsByClassName("formLog")[0];
+    let name = document.getElementById("wrLogin").value || null;
+    let password = document.getElementById("wrPassword").value || null;
+
+    if (name && password) {
+      localStorage.setItem("user", JSON.stringify(name));
+      dom.clearMain();
+      header.fillHeader();
+      dom.createMain();
+      dom.showPosts();
+      likeAddHandler();
+      deleteAddHandler();
+      quitAddHandler();
+      moreButtonAddHandler();
+      filterAddHandler();
+      editAddHandler();
+      addPhotoAddHandler();
+
+    } else {
+      errorMsg("formLog");
+    }
+  }
+
+  function add() {
+    header.fillHeader();
+    dom.clearMain();
+    dom.createAddAndEdit();
+    addPhotoAddHandler();
+    quitAddHandler();
+    saveChangesAddHandler();
+  }
+
+  function edit(i) {
+    idToEdit = deleteButton[i].parentNode.parentNode.getAttribute("id").substring(4);
+    let posts = JSON.parse(localStorage.getItem("AllPosts"));
+    header.fillHeader();
+    dom.clearMain();
+    dom.createAddAndEdit(newsPost.getPhotoPost(posts, idToEdit));
+    addPhotoAddHandler();
+    quitAddHandler();
+    saveChangesAddHandler();
+  }
+
+  function saveChanges() {
+    let msg = document.getElementById("message");
+    if (msg) {
+      document.getElementsByClassName("photoAdd")[0].removeChild(msg);
+    }
+
+    let posts = JSON.parse(localStorage.getItem("AllPosts"));
+    let user = JSON.parse(localStorage.getItem("user"));
+
+    let form = document.getElementsByClassName("photoAdd")[0];
+    let descr = document.getElementById("descr").value || null;
+    let tags = document.getElementById("tags").value || null;
+    let dropArea = document.getElementsByClassName("dropArea")[0];
+    let photoLink = dropArea.lastChild.getAttribute('src');
+    if (photoLink == "img/question.png") {
+      errorMsg("photoAdd");
+    }
+    else {
+    let tagAdd = null;
+    if (tags !== null) {
+      tagAdd = tags.split(" ");
+    }
+    else {
+      tagAdd = [];
+    }
+
+    if (idToEdit === null) {
+      let id = 0;
+      for (let i = 0; i < posts.length; i++) {
+        if (Number(posts[i].id) > id) {
+          id = Number(posts[i].id) ;
+        }
+      }
+
+      id += 1;
+      let photoPost = {
+        id: id,
+        description: descr,
+        createdAt: new Date(),
+        author: user,
+        hashtags: tagAdd,
+        likes: [],
+        photoLink: photoLink,
+        isDeleted: false
+      };
+      if (!newsPost.addPhotoPost(posts, photoPost)) {
+        errorMsg("photoAdd");
+      }
+      else {
+        localStorage.setItem("AllPosts", JSON.stringify(posts));
+        loadMain();
+      }
+    }
+    else {
+      let photoPost = {
+        description: descr,
+        hashtags: tagAdd,
+        photoLink: photoLink
+      };
+      if (!newsPost.editPhotoPost(posts, idToEdit, photoPost)) {
+        errorMsg("photoAdd");
+      }
+      else {
+        localStorage.setItem("AllPosts", JSON.stringify(posts));
+        loadMain();
+        idToEdit = null;
+      }
+    }
+  }
   }
 
   function loadFilterMsg(className) {
@@ -126,10 +277,33 @@
     document.getElementsByClassName(className)[0].appendChild(message);
   }
 
+  function errorMsg(className) {
+    let message = document.createElement('div');
+    message.className = "title";
+    message.id = "messageError";
+    message.innerText = "invalid data";
+    document.getElementsByClassName(className)[0].appendChild(message);
+  }
+
   function reloadMain() {
     flag = false;
-    dom.showPosts(0, 10);
+    dom.showPosts();
     document.getElementsByClassName("morePhotos")[0].style.display = "block";
+  }
+
+  function loadMain() {
+    dom.clearMain();
+    header.fillHeader();
+    dom.createMain();
+    dom.showPosts();
+    likeAddHandler();
+    deleteAddHandler();
+    quitAddHandler();
+    moreButtonAddHandler();
+    filterAddHandler();
+    editAddHandler();
+    addPhotoAddHandler();
+    newsPost.photoAm++;
   }
 
   function hideMoreButton() {
@@ -138,11 +312,17 @@
     } else {
       document.getElementsByClassName("morePhotos")[0].style.display = "none";
     }
-
   }
 
-  moreButton.addEventListener("click", moreShow);
-  filterButton.addEventListener("click", filter);
+  function moreButtonAddHandler() {
+    moreButton =  document.getElementsByClassName("morePhotos")[0];
+    moreButton.addEventListener("click", moreShow);
+  }
+
+  function quitAddHandler() {
+    quitButton = document.getElementsByClassName("quit")[0];
+    quitButton.addEventListener("click", log);
+  }
 
   function deleteAddHandler() {
     deleteButton = document.getElementsByClassName("delete");
@@ -154,13 +334,44 @@
   }
 
   function likeAddHandler() {
+    likeButton = document.getElementsByClassName("like");
     for (let i = 0; i < dom.postsAmount; i++) {
       likeButton[i].addEventListener("click", function(e) {
         like(i);
       });
     }
   }
+
+  function filterAddHandler() {
+    flag = false;
+    filterButton = document.getElementById("OK");
+    filterButton.addEventListener("click", filter);
+  }
+
+  function addPhotoAddHandler() {
+    addButton = document.getElementsByClassName("addPhotoIcon")[0];
+    addButton.addEventListener("click", add);
+  }
+
+function editAddHandler() {
+  editButton = document.getElementsByClassName("edit");
+  for (let i = 0; i < editButton.length; i++) {
+    editButton[i].addEventListener("click", function(e) {
+      edit(i);
+    });
+  }
+}
+
+function saveChangesAddHandler() {
+  saveChangesButton =  document.getElementById("OK3");
+  saveChangesButton.addEventListener("click", saveChanges);
+}
+
+  quitAddHandler();
   likeAddHandler();
   deleteAddHandler();
-
+  moreButtonAddHandler();
+  filterAddHandler();
+  addPhotoAddHandler();
+  editAddHandler();
 })();

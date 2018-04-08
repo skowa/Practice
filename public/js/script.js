@@ -1,7 +1,7 @@
 ;(function(arr) {
     let photoPosts = [
         {
-            id: "1",
+            id: 1,
             description: "На второй день нашего путешествия мы ездили в Люцерн.",
             createdAt: new Date("2018-02-23T20:00:00"),
             author: "skowik",
@@ -11,7 +11,7 @@
             isDeleted: false
         },
         {
-            id: "2",
+            id: 2,
             description: "После Люцерна мы на фуникулерах поднялись на гору Пилатес. Она около 2км над уровнем моря. Было невероятно.",
             createdAt: new Date("2018-02-23T22:44:00"),
             author: "skowik",
@@ -291,7 +291,7 @@
         }
 
         for (let i = 0; i < array.length; i++) {
-            if (array[i].id === id) {
+            if (String(array[i].id) === id) {
                 return array[i];
             }
         }
@@ -328,10 +328,12 @@
             return false;
         }
 
-        for (let i = 0; i < photoPost.hashtags.length; i++) {
-            if (photoPost.hashtags[i].length >= 20) {
-                return false;
-            }
+        if (photoPost.hashtags !== []) {
+          for (let i = 0; i < photoPost.hashtags.length; i++) {
+              if (photoPost.hashtags[i].length >= 20) {
+                  return false;
+              }
+          }
         }
 
         return true;
@@ -360,13 +362,17 @@
 
         let editedPhotoPostIndex;
         for (let i = 0; i < array.length; i++) {
-            if (id === array[i].id) {
+            if (id === String(array[i].id)) {
                 editedPhotoPostIndex = i;
                 break;
             }
         }
 
         let flag = false;
+
+        if (photoPost.description === null) {
+          return false;
+        }
 
         if (photoPost.description !== undefined) {
             editedPhotoPost.description = photoPost.description;
@@ -377,10 +383,6 @@
             flag = true;
         }
         if (photoPost.hashtags !== undefined) {
-            editedPhotoPost.hashtags = photoPost.hashtags;
-            flag = true;
-        }
-        if (photoPost.likes !== undefined) {
             editedPhotoPost.hashtags = photoPost.hashtags;
             flag = true;
         }
@@ -400,7 +402,7 @@
         }
 
         for (let i = 0; i < array.length; i++)
-            if (array[i].id === id) {
+            if (String(array[i].id) === id) {
                 array[i].isDeleted = true;
                 --arr.photoAm;
                 return true;

@@ -44,10 +44,24 @@ body {
 
 .quit {
   width: 75px;
-  height: 21px;
-  top: 18px;
   right: 0px;
   position: absolute;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  text-decoration: none;
+  border: none;
+}
+
+.quit:hover, .addPhotoIcon:hover{
+    color: #715ea8;
+}
+
+.quit:active, .addPhotoIcon:active{
+    color: #fff;
+}
+
+.quit:focus, .addPhotoIcon:focus {
+  outline:none;
 }
 
 .addPhotoIcon {
@@ -58,6 +72,10 @@ body {
   right: 300px;
   background-image: url(../img/addPhoto.png);
   background-repeat: no-repeat;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  text-decoration: none;
+  border: none;
 }
 
 .wrapperContent {
@@ -294,6 +312,126 @@ body {
   margin: 0 auto;
   margin-left: 400px;
   padding-bottom: 30px;
+}
+
+#messageError {
+  position: absolute;
+  font: normal 25px Calibri;
+  color: #272628;
+  margin: 0 auto;
+  margin-left:10px;
+  margin-top: 10px;
+}
+
+.authorizeForm
+{
+  font: normal 25px Calibri;
+  margin: 0 auto;
+  position: absolute;
+  margin-left: 350px;
+  margin-top: 200px;
+  width: 400px;
+  height: 200px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  background-color: #b9a6f1;;
+}
+
+.formLog {
+  margin-left: 40px;
+  margin-top: 10px;
+}
+
+.authorizeForm input[type="text"]{
+  width: 300px;
+  height: 30px;
+  font: normal 17px Calibri;
+  margin-top: 3px;
+  color: #686972
+}
+
+.authorizeForm input[type=submit] {
+  padding: 3px 12px;
+  font: normal 17px Calibri;
+  width: 50px;
+  height: 30px;
+  background: #fff;
+  border: 0 none;
+  cursor: pointer;
+  margin-left: 180px;
+  margin-top: 15px;
+}
+
+#descr {
+  margin-top: 50px;
+}
+
+#tags {
+  margin-top: 50px;
+}
+
+.photoAdd input[type=submit] {
+  padding: 3px 12px;
+  font: normal 17px Calibri;
+  width: 50px;
+  height: 30px;
+  background: #ccc;
+  border: 0 none;
+  cursor: pointer;
+  margin-left: 150px;
+  margin-top: 15px;
+}
+
+.photoAdd {
+  width: 730px;
+  height: 250px;
+  position: relative;
+  left: 380px;
+  padding-top: 60px;
+  margin-top: -340px;
+}
+
+.dropArea {
+  margin-left: 30px;
+  padding-top: 90px;
+}
+
+.dropArea img {
+  width: 250px;
+  height: 250px;
+}
+
+.dropArea p {
+  margin-left: 38px;
+  font: normal 21px Calibri;
+  color: #3e404b;
+}
+
+input[type=file] {
+  font: normal 18px Calibri;
+  margin-top: 15px;
+  margin-left: 30px;
+}
+
+.photoAdd h1 {
+  font: normal 27px Calibri;
+  color: #3e404b;
+  position: absolute;
+  top: 20px;
+}
+
+.photoAdd h3 {
+  font: normal 15px Calibri;
+  color: #3e404b;
+  position: absolute;
+  top: 20px;
+  right: 70px;
+}
+
+.photoAdd p {
+  font: normal 21px Calibri;
+  color: #3e404b;
+  position: absolute;
 }
 
 @font-face {

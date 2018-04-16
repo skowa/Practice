@@ -16,7 +16,10 @@
   function moreShow() {
     if (!flag) {
       dom.showPosts(0, dom.postsAmount + 10);
-      if (dom.postsAmount >= newsPost.photoAm) {
+      let posts = JSON.parse(localStorage.getItem("AllPosts"));
+      let photoAm = posts.filter(function (photoPost) { return photoPost.isDeleted === false }).length;
+
+      if (dom.postsAmount >= photoAm) {
         this.style.display = "none";
       }
     } else {
@@ -35,7 +38,7 @@
     if (user !== null) {
       let id = likeButton[i].parentNode.parentNode.getAttribute("id").substring(4);
       let posts = JSON.parse(localStorage.getItem("AllPosts"));
-      let post = newsPost.getPhotoPost(posts, id);
+      let post = module.getPhotoPost(posts, id);
 
       let index = post.likes.indexOf(user);
       let icon = "";
@@ -48,7 +51,7 @@
         icon = "img/noLike.png";
       }
 
-      newsPost.editPhotoPost(id, post);
+      module.editPhotoPost(id, post);
       localStorage.setItem("AllPosts", JSON.stringify(posts));
 
       likeButton[i].firstChild.src = icon
@@ -81,7 +84,8 @@
       };
 
       let posts = JSON.parse(localStorage.getItem("AllPosts"));
-      allPhotos = newsPost.getPhotoPosts(posts, 0, newsPost.photoAm, filterConfig).length;
+      let photoAm = posts.filter(function (photoPost) { return photoPost.isDeleted === false }).length;
+      allPhotos = module.getPhotoPosts(posts, 0, photoAm, filterConfig).length;
 
       dom.showPosts(0, 10, {
         author: nameFilter,
@@ -106,12 +110,14 @@
     if (toDelete) {
       let id = deleteButton[i].parentNode.parentNode.getAttribute("id").substring(4);
       let posts = JSON.parse(localStorage.getItem("AllPosts"));
-      newsPost.removePhotoPost(posts, id);
+      let photoAm = posts.filter(function (photoPost) { return photoPost.isDeleted === false }).length;
+
+      module.removePhotoPost(posts, id);
       localStorage.setItem("AllPosts", JSON.stringify(posts));
 
       if (!flag) {
         dom.showPosts(0, dom.postsAmount);
-        if (dom.postsAmount >= newsPost.photoAm) {
+        if (dom.postsAmount >= photoAm) {
           moreButton.style.display = "none";
         }
       } else {
@@ -192,7 +198,7 @@
     let posts = JSON.parse(localStorage.getItem("AllPosts"));
     header.fillHeader();
     dom.clearMain();
-    dom.createAddAndEdit(newsPost.getPhotoPost(posts, idToEdit));
+    dom.createAddAndEdit(module.getPhotoPost(posts, idToEdit));
     addPhotoAddHandler();
     quitAddHandler();
     saveChangesAddHandler();
@@ -243,7 +249,7 @@
         photoLink: photoLink,
         isDeleted: false
       };
-      if (!newsPost.addPhotoPost(posts, photoPost)) {
+      if (!module.addPhotoPost(posts, photoPost)) {
         errorMsg("photoAdd");
       }
       else {
@@ -257,7 +263,7 @@
         hashtags: tagAdd,
         photoLink: photoLink
       };
-      if (!newsPost.editPhotoPost(posts, idToEdit, photoPost)) {
+      if (!module.editPhotoPost(posts, idToEdit, photoPost)) {
         errorMsg("photoAdd");
       }
       else {
@@ -303,7 +309,6 @@
     filterAddHandler();
     editAddHandler();
     addPhotoAddHandler();
-    newsPost.photoAm++;
   }
 
   function hideMoreButton() {

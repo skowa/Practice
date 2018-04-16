@@ -220,7 +220,7 @@
 
     let allPosts = JSON.parse(localStorage.getItem("AllPosts"));
 
-    let photoPosts = newsPost.getPhotoPosts(allPosts, skip, top, filterConfig);
+    let photoPosts = module.getPhotoPosts(allPosts, skip, top, filterConfig);
 
     for (let i = 0; i < photoPosts.length; i++) {
       arr.show(photoPosts[i], i);
@@ -229,18 +229,6 @@
 
   }
 })(this.dom = {});
-
-function addPost(post) {
-  let posts = JSON.parse(localStorage.getItem("AllPosts"));
-  newsPost.addPhotoPost(posts, post);
-  showPosts();
-}
-
-function editPost(id, post) {
-  let posts = JSON.parse(localStorage.getItem("AllPosts"));
-  newsPost.editPhotoPost(id, post);
-  showPosts();
-}
 
 dom.createMain();
 dom.showPosts();

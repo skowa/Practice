@@ -1,0 +1,526 @@
+{
+	"id": "98c6219a-423e-44ad-b5eb-b7f53cf55b45",
+	"name": "postsRequests",
+	"description": null,
+	"auth": null,
+	"events": null,
+	"variables": null,
+	"order": [
+		"caeee7bb-b20d-4499-8425-89521dd3ef35",
+		"1eaae1c4-cf9a-44e5-8e8a-d7c37c233d5b",
+		"d6491ede-9360-4ab4-994e-26f2b04d0801",
+		"6ed8aa44-d2ad-4d18-8f15-f9023845ed37",
+		"eccfbca2-4ffc-4141-8dfd-cf769f16407b",
+		"5fc3211d-da3c-4a94-8551-d4070fe53680",
+		"c8989224-4939-421f-b155-312707b9b23a",
+		"9d1337c3-4f1b-4832-a30d-b7a418697902",
+		"e518cc83-05f6-4a76-9e1b-9515db2bf1af",
+		"32355694-3101-4a4c-8157-4a58873a301e",
+		"aefb2dd9-e3c1-4975-94dd-169386c2eaf9",
+		"3ded99d8-7627-4d9f-b5d8-c9f9e31faf0f",
+		"d4ed8353-934c-4bad-9c73-b29c64a03ac9",
+		"41a3068e-9b01-47db-8b4e-f0a40ca73e97",
+		"1e47ebed-2688-4b79-9ae0-33e5477b80c1",
+		"48846a52-a469-4a07-8d72-29e6ea8f6d72",
+		"dee88376-d36a-43f0-af43-b977c7587057",
+		"36a77777-ff21-4121-8231-3d330b65d3c7",
+		"3115b1d3-ba89-480e-b3bf-c1380f2459a5",
+		"121edaf0-6a77-4bc5-9be5-0060562a2cb9",
+		"de910841-db4c-4532-8dd7-11ca25c03096"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "121edaf0-6a77-4bc5-9be5-0060562a2cb9",
+			"name": "http://localhost:3000/getPost/1",
+			"url": "http://localhost:3000/getPost/1",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "1e47ebed-2688-4b79-9ae0-33e5477b80c1",
+			"name": "http://localhost:3000/add",
+			"url": "http://localhost:3000/add",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\r\n            \"id\": 3,\r\n            \"description\": \"А вы нашли здесь жирафов?:)\",\r\n            \"author\": \"viviBo\",\r\n            \"hashtags\": [\"#nature\", \"#animal\", \"#giraffe\"],\r\n            \"likes\": [\"skowik\", \"alexSommver\", \"marinaGo12\", \"ira2903\"],\r\n            \"photoLink\": \"img/photo3.jpg\"\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "1eaae1c4-cf9a-44e5-8e8a-d7c37c233d5b",
+			"name": "http://localhost:3000/getPost/1",
+			"url": "http://localhost:3000/getPost/1",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "3115b1d3-ba89-480e-b3bf-c1380f2459a5",
+			"name": "http://localhost:3000/add",
+			"url": "http://localhost:3000/add",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\r\n            \"id\": 2,\r\n            \"description\": \"После Люцерна мы на фуникулерах поднялись на гору Пилатес. Она около 2км над уровнем моря. Было невероятно.\",\r\n            \"author\": \"skowik\",\r\n            \"hashtags\": [\"#Pilates\", \"#Switzerland\", \"#travel\", \"#mountain\"],\r\n            \"likes\": [\"viviBo\", \"alexSommver\", \"ira2903\"],\r\n            \"photoLink\": \"img/photo2.jpg\"\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "32355694-3101-4a4c-8157-4a58873a301e",
+			"name": "http://localhost:3000/getPost/2",
+			"url": "http://localhost:3000/getPost/2",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "36a77777-ff21-4121-8231-3d330b65d3c7",
+			"name": "http://localhost:3000/getPost/2",
+			"url": "http://localhost:3000/getPost/2",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "3ded99d8-7627-4d9f-b5d8-c9f9e31faf0f",
+			"name": "http://localhost:3000/editPost/2",
+			"url": "http://localhost:3000/editPost/2",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"description\": \"new description\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "41a3068e-9b01-47db-8b4e-f0a40ca73e97",
+			"name": "http://localhost:3000/add",
+			"url": "http://localhost:3000/add",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\r\n            \"id\": 4,\r\n            \"description\": \"Зимнее утро также может быть прекрасным!\",\r\n            \"author\": \"ira2903\",\r\n            \"hashtags\": [\"#winter\", \"#sun\", \"#beauty\", \"#nature\"],\r\n            \"likes\": [\"tanya0023\", \"alexSommver\", \"marinaGo12\", \"skowik\"],\r\n            \"photoLink\": \"img/photo4.jpg\"\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "48846a52-a469-4a07-8d72-29e6ea8f6d72",
+			"name": "http://localhost:3000/getPost/2",
+			"url": "http://localhost:3000/getPost/2",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "5fc3211d-da3c-4a94-8551-d4070fe53680",
+			"name": "http://localhost:3000/getPosts?skip=0&top=2",
+			"url": "http://localhost:3000/getPosts?skip=0&top=2",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "skip",
+					"value": "0",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "top",
+					"value": "2",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "6ed8aa44-d2ad-4d18-8f15-f9023845ed37",
+			"name": "http://localhost:3000/removePost/1",
+			"url": "http://localhost:3000/removePost/1",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "9d1337c3-4f1b-4832-a30d-b7a418697902",
+			"name": "http://localhost:3000/getPost/2",
+			"url": "http://localhost:3000/getPost/2",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "aefb2dd9-e3c1-4975-94dd-169386c2eaf9",
+			"name": "http://localhost:3000/getPost/5",
+			"url": "http://localhost:3000/getPost/5",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "c8989224-4939-421f-b155-312707b9b23a",
+			"name": "http://localhost:3000/getPosts?skip=0&top=5",
+			"url": "http://localhost:3000/getPosts?skip=0&top=5",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"description": "",
+					"type": "text",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "skip",
+					"value": "0",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "top",
+					"value": "5",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"hashtags\": [\"#nature\"],\n\t\"author\": \"viviBo\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "caeee7bb-b20d-4499-8425-89521dd3ef35",
+			"name": "http://localhost:3000/add",
+			"url": "http://localhost:3000/add",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\r\n\t\"id\": \"1\",\r\n    \"description\": \"На второй день нашего путешествия мы ездили в Люцерн.\",\r\n    \"author\": \"skowik\",\r\n    \"hashtags\": [\"#Luzern\", \"#Switzerland\", \"#travel\"],\r\n    \"photoLink\": \"img/photo1.jpg\",\r\n    \"likes\": [\"viviBo\", \"alexSommver\", \"marinaGo12\"]\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "d4ed8353-934c-4bad-9c73-b29c64a03ac9",
+			"name": "http://localhost:3000/add",
+			"url": "http://localhost:3000/add",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\r\n            \"id\": 5,\r\n            \"description\": \"Чувство, будто ящерица мне позировала:)\",\r\n            \"author\": \"viviBo\",\r\n            \"hashtags\": [\"#nature\", \"#lizard\", \"#animal\"],\r\n            \"likes\": [\"tanya0023\", \"alexSommver\", \"marinaGo12\", \"ira2903\"],\r\n            \"photoLink\": \"img/photo5.jpg\"\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "d6491ede-9360-4ab4-994e-26f2b04d0801",
+			"name": "http://localhost:3000/getPost/1",
+			"url": "http://localhost:3000/getPost/1",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "de910841-db4c-4532-8dd7-11ca25c03096",
+			"name": "http://localhost:3000/add",
+			"url": "http://localhost:3000/add",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\r\n\t\"id\": \"1\",\r\n    \"description\": \"На второй день нашего путешествия мы ездили в Люцерн.\",\r\n    \"author\": \"skowik\",\r\n    \"hashtags\": [\"#Luzern\", \"#Switzerland\", \"#travel\"],\r\n    \"photoLink\": \"img/photo1.jpg\",\r\n    \"likes\": [\"viviBo\", \"alexSommver\", \"marinaGo12\"]\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "dee88376-d36a-43f0-af43-b977c7587057",
+			"name": "http://localhost:3000/add",
+			"url": "http://localhost:3000/add",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\r\n            \"id\": 2,\r\n            \"description\": \"После Люцерна мы на фуникулерах поднялись на гору Пилатес. Она около 2км над уровнем моря. Было невероятно.\",\r\n            \"author\": \"skowik\",\r\n            \"hashtags\": [\"#Pilates\", \"#Switzerland\", \"#travel\", \"#mountain\"],\r\n            \"likes\": [\"viviBo\", \"alexSommver\", \"ira2903\"],\r\n            \"photoLink\": \"img/photo2.jpg\"\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "e518cc83-05f6-4a76-9e1b-9515db2bf1af",
+			"name": "http://localhost:3000/editPost/2",
+			"url": "http://localhost:3000/editPost/2",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"disabled": false
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"description\": \"new description\",\n\t\"hashtags\": [\"tag1\"]\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "eccfbca2-4ffc-4141-8dfd-cf769f16407b",
+			"name": "http://localhost:3000/getPosts?skip=0&top=5",
+			"url": "http://localhost:3000/getPosts?skip=0&top=5",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "skip",
+					"value": "0",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "top",
+					"value": "5",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		}
+	]
+}

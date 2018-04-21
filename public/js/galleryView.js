@@ -1,5 +1,5 @@
-;(function(arr) {
-  let user = JSON.parse(localStorage.getItem("user"));
+;
+(function(arr) {
   arr.postsAmount = 0;
 
   arr.createMain = function createMenu() {
@@ -26,6 +26,22 @@
     let button = document.createElement("div");
     button.innerHTML = "<button class=\"morePhotos\" title=\"more\"><p>Загрузить следующие фото</p></button>";
     news.appendChild(button);
+  }
+
+  arr.fillHeader = function fillHeader() {
+    let user = localStorage.getItem("user");
+
+    let isUser = (user !== null);
+
+    document.getElementsByClassName("header")[0].innerHTML = `<h1 class="logo">PHOTOGALLERY</h1>`;
+    if (isUser) {
+      document.getElementsByClassName("header")[0].innerHTML += `
+              <p class="authorsName">@` + user + `</p>
+              <button class="quit"><p>ВЫЙТИ</p></button>
+              <button class="addPhotoIcon"> </button>`;
+    } else {
+      document.getElementsByClassName("header")[0].innerHTML += `<button class="quit"><p>ВОЙТИ</p></button>`;
+    }
   }
 
   arr.clearMain = function clearMain() {
@@ -57,48 +73,50 @@
     content.appendChild(photoLoad);
 
     let dropArea = document.createElement('div');
-       dropArea.className = 'dropArea';
+    dropArea.className = 'dropArea';
 
-       let dropAreaText = document.createElement("p");
-       dropAreaText.innerHTML = "DRUG & DROP AREA";
+    let dropAreaText = document.createElement("p");
+    dropAreaText.innerHTML = "DRUG & DROP AREA";
 
-       dropArea.appendChild(dropAreaText);
+    dropArea.appendChild(dropAreaText);
 
-       let imgDropArea = document.createElement('img');
-       if (post)
-       {
-         imgDropArea.setAttribute('src', post.photoLink);
-       }
-       else {
-         imgDropArea.setAttribute('src', "img/question.png");
-       }
+    let imgDropArea = document.createElement('img');
+    if (post) {
+      imgDropArea.setAttribute('src', post.photoLink);
+    } else {
+      imgDropArea.setAttribute('src', "img/question.png");
+    }
 
-       dropArea.appendChild(imgDropArea);
+    dropArea.appendChild(imgDropArea);
 
-       dropArea.addEventListener("dragover", function (event) {
-           event.preventDefault();
-       }, false);
+    dropArea.addEventListener("dragover", function(event) {
+      event.preventDefault();
+    }, false);
 
-       dropArea.addEventListener("drop", function (event) {
-           event.preventDefault();
-           let files = event.dataTransfer.files;
-           let reader = new FileReader();
-           reader.readAsDataURL(files[0]);
-           reader.onloadend = function () {
-               imgDropArea.setAttribute('src',reader.result);
-           };
-       }, false);
+    dropArea.addEventListener("drop", function(event) {
+      event.preventDefault();
 
-       content.appendChild(dropArea);
+      let files = event.dataTransfer.files;
+      galleryController.loadImage(files[0]);
+      let reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onloadend = function() {
+        imgDropArea.setAttribute('src', reader.result);
+      };
+    }, false);
+
+    content.appendChild(dropArea);
 
     let photoAdd = document.createElement("div");
     photoAdd.className = "photoAdd";
+
+    let user = localStorage.getItem("user") || null;
 
     if (post !== undefined) {
       photoAdd.innerHTML = `
       <h1>@` + post.author + `</h1>
       <form>
-        <h3>` +  getFormatDate(post) + `<br />` + getFormatTime(post) + `</h3>
+        <h3>` + post.createdAt.substring(0, post.createdAt.length - 5) + `<br />` + post.createdAt.substring(post.createdAt.length - 5) + `</h3>
         <p>
           Описание:
         </p>
@@ -106,16 +124,14 @@
         <p>
           Хештеги:
         </p>
-        <textarea id="tags" rows="6" cols="50" name="tags" placeholder="Пишите хештеги через пробел">` + post.hashtags.join(" ") + `</textarea>
+        <textarea id="tags" rows="6" cols="50" name="tags" placeholder="Пишите хештеги через пробел">` + post.hashtags + `</textarea>
       </form>
       <input id="OK3" type="submit" value="OK">`;
-    }
-    else {
-      user = JSON.parse(localStorage.getItem("user"));
+    } else {
       photoAdd.innerHTML = `
       <h1>@` + user + `</h1>
       <form>
-        <h3>` +  getFormatDate() + `<br />` + getFormatTime() + `</h3>
+        <h3>` + getFormatDate() + `<br />` + getFormatTime() + `</h3>
         <p>
           Описание:
         </p>
@@ -132,7 +148,7 @@
   }
 
   arr.show = function showPhotoPost(post, position) {
-    user = JSON.parse(localStorage.getItem("user"));
+    let user = localStorage.getItem("user") || null;
     let isUser = (user === post.author);
 
     let photo = document.createElement("div");
@@ -178,8 +194,7 @@
     let date;
     if (post !== undefined) {
       date = new Date(post.createdAt);
-    }
-    else {
+    } else {
       date = new Date();
     }
 
@@ -198,8 +213,7 @@
     let date;
     if (post !== undefined) {
       date = new Date(post.createdAt);
-    }
-    else {
+    } else {
       date = new Date();
     }
 
@@ -214,13 +228,11 @@
     return hours + ":" + minutes;
   }
 
-  arr.showPosts = function showPosts(skip, top, filterConfig) {
+  arr.showPosts = function showPosts(allPosts, skip, top, filterConfig) {
     arr.postsAmount = 0;
     document.body.getElementsByClassName("photos")[0].innerHTML = "";
 
-    let allPosts = JSON.parse(localStorage.getItem("AllPosts"));
-
-    let photoPosts = module.getPhotoPosts(allPosts, skip, top, filterConfig);
+    let photoPosts = galleryModel.getPhotoPosts(allPosts, skip, top, filterConfig);
 
     for (let i = 0; i < photoPosts.length; i++) {
       arr.show(photoPosts[i], i);
@@ -228,7 +240,4 @@
     }
 
   }
-})(this.dom = {});
-
-dom.createMain();
-dom.showPosts();
+})(this.galleryView = {});

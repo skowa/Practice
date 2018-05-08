@@ -1,8 +1,8 @@
 ;
-(function(exp) {
+(function (exp) {
   exp.getPhotoPosts = function getPhotoPosts(givenArray, skip, top, filterConfig) {
     let newPhotoPosts = [];
-    let array = givenArray.filter(function(photoPost) {
+    let array = givenArray.filter(function (photoPost) {
       return photoPost.isDeleted === false
     });
     if (skip < 0 || skip >= array.length || skip === undefined) {
@@ -16,7 +16,7 @@
     let flag = false;
     if (filterConfig !== undefined) {
       if ("author" in filterConfig && filterConfig.author !== null) {
-        newPhotoPosts = array.filter(function(photoPost) {
+        newPhotoPosts = array.filter(function (photoPost) {
           return photoPost.author === filterConfig.author
         });
         flag = true;
@@ -33,12 +33,12 @@
 
       if ("createdAt" in filterConfig && filterConfig.createdAt !== null) {
         if (!flag) {
-          newPhotoPosts = array.filter(function(photoPost) {
-            return new Date(photoPost.createdAt) <=  new Date(filterConfig.createdAt)
+          newPhotoPosts = array.filter(function (photoPost) {
+            return new Date(photoPost.createdAt) <= new Date(filterConfig.createdAt)
           });
         } else {
-          newPhotoPosts = newPhotoPosts.filter(function(photoPost) {
-            return new Date(photoPost.createdAt) <=  new Date(filterConfig.createdAt)
+          newPhotoPosts = newPhotoPosts.filter(function (photoPost) {
+            return new Date(photoPost.createdAt) <= new Date(filterConfig.createdAt)
           });
         }
       }
@@ -51,7 +51,7 @@
   }
 
   function sortByDate(array) {
-    return array.sort(function(a, b) {
+    return array.sort(function (a, b) {
       return new Date(b.createdAt) - new Date(a.createdAt)
     });
   }

@@ -1,5 +1,5 @@
 ;
-(function(arr) {
+(function (arr) {
   arr.postsAmount = 0;
 
   arr.createMain = function createMenu() {
@@ -89,18 +89,23 @@
 
     dropArea.appendChild(imgDropArea);
 
-    dropArea.addEventListener("dragover", function(event) {
+    dropArea.addEventListener("dragover", function (event) {
       event.preventDefault();
     }, false);
 
-    dropArea.addEventListener("drop", function(event) {
+    dropArea.addEventListener("drop", function (event) {
       event.preventDefault();
 
       let files = event.dataTransfer.files;
-      galleryController.loadImage(files[0]);
+      galleryController.loadImage(files[0])
+        .then(response => {
+          galleryController.flagPhoto = true;
+          localStorage.setItem("photolink", response);
+        })
+        .catch(error => alert(error));
       let reader = new FileReader();
       reader.readAsDataURL(files[0]);
-      reader.onloadend = function() {
+      reader.onloadend = function () {
         imgDropArea.setAttribute('src', reader.result);
       };
     }, false);

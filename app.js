@@ -7,10 +7,10 @@ const jsonFile = "server/data/posts.json";
 const multer = require('multer');
 
 let storage = multer.diskStorage({
-  destination: function(req, file, callback) {
+  destination: function (req, file, callback) {
     callback(null, __dirname + '/public/img/tmp');
   },
-  filename: function(req, file, callback) {
+  filename: function (req, file, callback) {
     let filename = file.fieldname + '-' + Date.now() + '-' + file.originalname;
     callback(null, filename);
   }
@@ -40,12 +40,6 @@ app.get('/getMaxID', (req, res) => {
   let allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
   if (allPosts !== null) {
-    fs.writeFile(jsonFile, JSON.stringify(allPosts), function(error) {
-      if (error) {
-        throw error;
-      }
-    });
-
     let id = 0;
     for (let i = 0; i < allPosts.length; i++) {
       if (Number(allPosts[i].id) > id) {
@@ -79,11 +73,7 @@ app.post('/add', (req, res) => {
   let allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
   if (posts.galleryModel.addPhotoPost(allPosts, post)) {
-    fs.writeFile(jsonFile, JSON.stringify(allPosts), function(error) {
-      if (error) {
-        throw error;
-      }
-    });
+    fs.writeFileSync(jsonFile, JSON.stringify(allPosts));
 
     res.status(200).end();
   } else {
@@ -116,7 +106,7 @@ app.post('/getFilteredLength', (req, res) => {
   let filter = req.body;
   let postsFilt = posts.galleryModel.getPhotoPosts(allPosts, 0, allPosts.length, filter);
 
-  if (postsFilt.length != 0) {
+  if (postsFilt.length >= 0) {
     res.statusCode = 200;
     res.send(JSON.stringify(postsFilt.length));
   } else {
@@ -128,11 +118,7 @@ app.put('/editPost/:id', (req, res) => {
   let allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
   if (posts.galleryModel.editPhotoPost(allPosts, req.params.id, req.body)) {
-    fs.writeFile(jsonFile, JSON.stringify(allPosts), function(error) {
-      if (error) {
-        throw error;
-      }
-    });
+    fs.writeFileSync(jsonFile, JSON.stringify(allPosts));
 
     res.status(200).end();
   } else {
@@ -145,11 +131,7 @@ app.delete('/removePost/:id', (req, res) => {
   let allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
   if (posts.galleryModel.removePhotoPost(allPosts, req.params.id)) {
-    fs.writeFile(jsonFile, JSON.stringify(allPosts), function(error) {
-      if (error) {
-        throw error;
-      }
-    });
+    fs.writeFileSync(jsonFile, JSON.stringify(allPosts));
 
     res.status(200).end()
   } else {
@@ -157,20 +139,16 @@ app.delete('/removePost/:id', (req, res) => {
   }
 });
 
-app.post('/likePost/:id&:user', (req, res) =>{
-    let allPosts = JSON.parse(fs.readFileSync(jsonFile));
-    let flag = posts.galleryModel.likePost(allPosts, req.params.id, req.params.user);
-    fs.writeFile(jsonFile, JSON.stringify(allPosts), function(error){
-        if(error){
-            throw error;
-        }
-    });
-    res.send(flag);
+app.post('/likePost/:id&:user', (req, res) => {
+  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  let flag = posts.galleryModel.likePost(allPosts, req.params.id, req.params.user);
+  fs.writeFileSync(jsonFile, JSON.stringify(allPosts));
+  res.send(flag);
 });
 
 app.get('/getLength', (req, res) => {
   let allPosts = JSON.parse(fs.readFileSync(jsonFile));
-  let array = allPosts.filter(function(photoPost) {
+  let array = allPosts.filter(function (photoPost) {
     return photoPost.isDeleted === false
   });
 

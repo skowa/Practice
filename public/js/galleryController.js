@@ -1,33 +1,63 @@
 ;
-(function(exp) {
+(function (exp) {
   let filterButton;
   let likeButton;
   let moreButton;
   let authButton;
   let quitButton;
   let deleteButton;
-  let flag = false;
-  let flagPhoto = false;
   let addButton;
   let editButton;
   let saveChangesButton;
   let idToEdit = null;
+  let flag = false;
+  exp.flagPhoto = false;
 
-  function moreShow() {
-    getPostsLengthServer();
-    let length = parseInt(localStorage.getItem("length"));
-    if (!flag) {
-      loadPostsServer(0, galleryView.postsAmount + 10)
-      if (length - galleryView.postsAmount <= 10) {
-        this.style.display = "none";
+  async function moreShow() {
+    try {
+      await getPostsLengthServer();
+      let length = parseInt(localStorage.getItem("length"));
+      if (!flag) {
+        loadPosts(0, galleryView.postsAmount + 10)
+          .then(() => {
+            if (length - galleryView.postsAmount <= 0) {
+              moreButton.style.display = "none";
+            }
+          })
+          .catch(err => console.log(err));
+      } else {
+        let filterConfig = localStorage.getItem("filters");
+        length = parseInt(localStorage.getItem("lengthFilter"));
+        loadPosts(0, galleryView.postsAmount + 10, filterConfig)
+          .then(() => {
+            if (length - galleryView.postsAmount <= 0) {
+              moreButton.style.display = "none";
+            }
+          })
+          .catch(err => console.log(err));
       }
-    } else {
-      let filterConfig = localStorage.getItem("filters");
-      length = parseInt(localStorage.getItem("lengthFilter"));
-      loadPostsServer(0, galleryView.postsAmount + 10, filterConfig)
-      if (length - galleryView.postsAmount <= 10) {
-        this.style.display = "none";
+    } catch (e) {
+      throw new Error("Button click failed! (" + e.message + ")");
+    }
+  }
+
+  async function loadPosts(skip, top, filters) {
+    try {
+      const postsRes = await loadPostsServer(skip, top, filters);
+      const posts = await JSON.parse(postsRes);
+      galleryView.showPosts(posts, skip, top);
+
+      deleteAddHandler();
+      likeAddHandler();
+      editAddHandler();
+
+      await getPostsLength();
+      let length = parseInt(localStorage.getItem("length"));
+      if (length <= 10) {
+        moreButton.style.display = "none";
       }
+    } catch (e) {
+      throw new Error("Load posts failed! (" + e.message + ")");
     }
   }
 
@@ -35,7 +65,8 @@
     galleryView.fillHeader();
     if (document.getElementsByClassName("errorPic")[0] === undefined) {
       galleryView.createMain();
-      loadPostsServer();
+      loadPosts()
+        .catch(err => console.log(err));
     }
     let user = localStorage.getItem("user") || null;
 
@@ -48,16 +79,38 @@
     filterAddHandler();
   }
 
-  function like(i) {
-    let user = localStorage.getItem("user") || null;
-    if (user !== null) {
-      let id = likeButton[i].parentNode.parentNode.getAttribute("id").substring(4);
-      localStorage.setItem("toLike", i);
-      likePostServer(id, user);
+  async function like(i) {
+    try {
+      let user = localStorage.getItem("user") || null;
+      if (user !== null) {
+        let id = likeButton[i].parentNode.parentNode.getAttribute("id").substring(4);
+        const res = await likePostServer(id, user);
+
+        let icon = "";
+        let length = parseInt(likeButton[i].children[1].innerHTML);
+
+        if (res === "true") {
+          icon = "img/like.png";
+          likeButton[i].children[1].innerHTML = length + 1;
+        }
+        if (res === "false") {
+          icon = "img/noLike.png";
+          likeButton[i].children[1].innerHTML = length - 1;
+        }
+
+        likeButton[i].firstChild.src = icon;
+      }
+    } catch (e) {
+      throw new Error("Like post failed! (" + e.message + ")");
     }
   }
 
   function filter() {
+    let msg = document.getElementById("message");
+    if (msg) {
+      document.getElementsByClassName("news")[0].removeChild(msg);
+    }
+
     let filtr = document.getElementsByClassName("filtr")[0];
     let nameFilter = document.getElementById("author").value || null;
     let date = document.getElementById("date").value || null;
@@ -77,21 +130,80 @@
       };
 
       localStorage.setItem("filters", JSON.stringify(filterConfig));
-      loadPostsServer(0, 10, JSON.stringify(filterConfig));
-      getFilteredLengthServer(JSON.stringify(filterConfig));
+      loadPosts(0, 10, JSON.stringify(filterConfig))
+        .catch(err => console.log(err));
+
+      getPostsFilteredLength(filterConfig)
+        .catch(err => console.log(err));
     } else {
       flag = false;
-      loadPostsServer();
-      document.getElementsByClassName("morePhotos")[0].style.display = "block";
+      loadPosts()
+        .catch(err => console.log(err));
+      moreButton.style.display = "block";
     }
   }
 
-  function deletePhoto(i) {
-    var toDelete = confirm("Вы действительно хотите удалить пост?");
-    if (toDelete) {
-      let id = deleteButton[i].parentNode.parentNode.getAttribute("id").substring(4);
+  async function getPostsLength() {
+    try {
+      const length = await getPostsLengthServer();
 
-      deletePostServer(id);
+      localStorage.setItem("length", length);
+      if (length <= 10) {
+        moreButton.style.display = "none";
+      }
+    } catch (e) {
+      throw new Error("Getting length failed! (" + e.message + ")");
+    }
+  }
+
+  async function getPostsFilteredLength(filterConfig) {
+    try {
+      const length = await getFilteredLengthServer(JSON.stringify(filterConfig));
+
+      localStorage.setItem("lengthFilter", length);
+      if (length <= 10) {
+        moreButton.style.display = "none";
+      } else {
+        moreButton.style.display = "block";
+      }
+
+      if (length == 0) {
+        loadFilterMsg("news");
+      }
+    } catch (e) {
+      throw new Error("Getting filter length failed! (" + e.message + ")");
+    }
+  }
+
+  async function deletePhoto(i) {
+    try {
+      var toDelete = confirm("Вы действительно хотите удалить пост?");
+      if (toDelete) {
+        let id = deleteButton[i].parentNode.parentNode.getAttribute("id").substring(4);
+
+        let isDeleted = await deletePostServer(id);
+        if (!flag) {
+          loadPosts(0, galleryView.postsAmount)
+            .catch(err => console.log(err));
+
+          let length = parseInt(localStorage.getItem("length"));
+          localStorage.setItem("length", JSON.stringify(length - 1));
+          if (galleryView.postsAmount >= length - 1) {
+            moreButton.style.display = "none";
+          }
+        } else {
+          loadPosts(0, galleryView.postsAmount, localStorage.getItem("filters"))
+            .catch(err => console.log(err));
+
+          let length = parseInt(localStorage.getItem("lengthFilter"));
+          localStorage.setItem("lengthFilter", JSON.stringify(length - 1));
+          if (galleryView.postsAmount >= length - 1) {
+            moreButton.style.display = "none";
+          }
+        }
+      }
+    } catch (e) {
+      throw new Error("Deleting post failed! (" + e.message + ")");
     }
   }
 
@@ -101,11 +213,13 @@
     if (user !== null) {
       user = null;
       localStorage.removeItem("user");
+
       galleryView.clearMain();
       galleryController.startWork();
     } else {
       galleryView.clearMain();
       galleryView.createLogin();
+
       authButton = document.getElementById("OK2");
       authButton.addEventListener("click", authorize);
     }
@@ -132,9 +246,11 @@
 
   function add() {
     let user = localStorage.getItem("user");
+
     galleryView.fillHeader();
     galleryView.clearMain();
     galleryView.createAddAndEdit();
+
     addPhotoAddHandler();
     quitAddHandler();
     saveChangesAddHandler();
@@ -145,20 +261,56 @@
     idToEdit = id.substring(4)
     let user = localStorage.getItem("user");
 
-    let post = {descr: '', createdAt: '', hashtags: ''};
+    let post = {
+      descr: '',
+      createdAt: '',
+      hashtags: ''
+    };
     post.createdAt = document.getElementById(id).firstChild.childNodes[3].textContent;
     post.description = document.getElementById(id).firstChild.childNodes[5].textContent;
-    post.hashtags = document.getElementById(id).firstChild.childNodes[7].textContent.split (',' ).join ('');
+    post.hashtags = document.getElementById(id).firstChild.childNodes[7].textContent.split(',').join('');
     post.photoLink = document.getElementById(id).childNodes[1].firstChild.src;
     post.author = user;
 
     galleryView.fillHeader();
     galleryView.clearMain();
     galleryView.createAddAndEdit(post);
+
     addPhotoAddHandler();
     quitAddHandler();
     saveChangesAddHandler();
   }
+
+  async function addPost(photoPost) {
+    try {
+      await addPostServer(JSON.stringify(photoPost));
+      galleryController.flagPhoto = false;
+    } catch (e) {
+      errorMsg("photoAdd");
+      throw new Error("Adding photo failed! (" + e.message + ")");
+    }
+  }
+
+  async function editPost(photoPost) {
+    try {
+      await editPostServer(idToEdit, JSON.stringify(photoPost));
+      idToEdit = null;
+      galleryController.flagPhoto = false;
+    } catch (e) {
+      errorMsg("photoAdd");
+      throw new Error("Editing photo failed! (" + e.message + ")");
+    }
+  }
+
+  async function setID(photoPost) {
+    try {
+      let idRes = await setMaxIDServer();
+      localStorage.setItem("maxID", parseInt(idRes) + 1);
+    } catch (e) {
+      throw new Error("Setting id failed! (" + e.message + ")");
+    }
+  }
+
 
   function saveChanges() {
     let user = localStorage.getItem("user");
@@ -166,6 +318,7 @@
     let form = document.getElementsByClassName("photoAdd")[0];
     let descr = document.getElementById("descr").value || null;
     let tags = document.getElementById("tags").value || null;
+
     let dropArea = document.getElementsByClassName("dropArea")[0];
     let photoLink = dropArea.lastChild.getAttribute('src');
     if (photoLink == "img/question.png") {
@@ -179,11 +332,27 @@
       }
 
       if (idToEdit === null) {
-        setMaxIDServer(descr, tagAdd);
+        setID()
+          .then(() => {
+            let photoPost = {
+              id: localStorage.getItem("maxID"),
+              description: descr,
+              author: localStorage.getItem("user"),
+              hashtags: tagAdd,
+              photoLink: localStorage.getItem("photolink").substring(1, localStorage.getItem("photolink").length - 1)
+            };
+
+            addPost(photoPost)
+              .then(() => {
+                galleryView.clearMain();
+                galleryController.startWork();
+              })
+              .catch(err => console.log(err));
+          })
+          .catch(err => console.log(err));
       } else {
         let photoPost;
-        if (flagPhoto)
-        {
+        if (galleryController.flagPhoto) {
           photoPost = {
             description: descr,
             hashtags: tagAdd,
@@ -195,29 +364,39 @@
             hashtags: tagAdd
           };
         }
-        editPostServer(idToEdit, JSON.stringify(photoPost));
+
+        editPost(photoPost)
+          .then(() => {
+            galleryView.clearMain();
+            galleryController.startWork();
+          })
+          .catch(err => console.log(err));
+
       }
     }
   }
 
   exp.loadImage = function loadImage(post) {
-    let xhr = new XMLHttpRequest();
-    let formData = new FormData();
-    formData.append('file', post);
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      let formData = new FormData();
+      formData.append('file', post);
 
-    xhr.open("POST", "/uploadImage");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) return;
+      xhr.open("POST", "/uploadImage");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
+        }
 
-      if (xhr.status !== 200) {
-        console.log(xhr.status + ': ' + xhr.statusText);
-      } else {
-        localStorage.setItem("photolink", xhr.responseText);
-        flagPhoto = true;
-      }
-    };
+        if (xhr.status !== 200) {
+          reject(xhr.status + ': ' + xhr.statusText);
+        } else {
+          resolve(xhr.responseText);
+        }
+      };
 
-    xhr.send(formData);
+      xhr.send(formData);
+    })
   }
 
   function loadPostsServer(skip, top, filter) {
@@ -225,192 +404,166 @@
     top = top || 10;
     filter = filter || '{}';
 
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/getPosts?skip=" + skip + "&top=" + top, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) return;
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "/getPosts?skip=" + skip + "&top=" + top, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
+        }
 
-      if (xhr.status !== 200) {
-        console.log(xhr.status + ': ' + xhr.statusText);
-      } else {
-        galleryView.showPosts(JSON.parse(xhr.responseText), skip, top);
-        deleteAddHandler();
-        likeAddHandler();
-        editAddHandler();
-        getPostsLengthServer();
-      }
-    };
+        if (xhr.status !== 200) {
+          reject(xhr.status + ': ' + xhr.statusText);
+        } else {
+          resolve(xhr.responseText);
+        }
+      };
 
-    xhr.send(filter);
+      xhr.send(filter);
+    })
   }
 
-  function setMaxIDServer(descr, tags) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', '/getMaxID/');
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) {
-        return;
-      }
-      if (xhr.status !== 200) {
-        console.log(xhr.status + ': ' + xhr.statusText);
-      } else {
-        let id = parseInt(xhr.responseText) + 1;
-        let photoPost = {
-          id: JSON.stringify(id),
-          description: descr,
-          author: localStorage.getItem("user"),
-          hashtags: tags,
-          photoLink: localStorage.getItem("photolink").substring(1, localStorage.getItem("photolink").length - 1)
-        };
-        addPostServer(JSON.stringify(photoPost));
-      }
-    };
-    xhr.send();
+  function setMaxIDServer() {
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', '/getMaxID/');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
+        }
+        if (xhr.status !== 200) {
+          reject(xhr.status + ': ' + xhr.statusText);
+        } else {
+          resolve(xhr.responseText);
+        }
+      };
+      xhr.send();
+    })
   }
 
   function addPostServer(post) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/add", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.onreadystatechange = function() {
-      if (xhr.status !== 200 || xhr.readyState !== 4) {
-        console.log(xhr.status + ": " + xhr.statusText);
-        errorMsg("photoAdd");
-      } else {
-        galleryView.clearMain();
-        galleryController.startWork();
-        flagPhoto = false;
-        }
-      };
-
-    xhr.send(post);
-  }
-
-  function editPostServer(id, post) {
+    return new Promise((resolve, reject) => {
       let xhr = new XMLHttpRequest();
-      xhr.open("PUT", "/editPost/" + id, true);
+      xhr.open("POST", "/add", true);
       xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function() {
-          if (xhr.readyState !== 4) return;
 
-          if (xhr.status !== 200) {
-              console.log(xhr.status + ': ' + xhr.statusText);
-              errorMsg("photoAdd");
-          }
-          else {
-            galleryView.clearMain();
-            galleryController.startWork();
-            idToEdit = null;
-            flagPhoto = false;
-          }
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
+        }
+
+        if (xhr.status !== 200) {
+          reject(xhr.status + ": " + xhr.statusText);
+        } else {
+          resolve(true);
+        }
       };
 
       xhr.send(post);
+    })
+  }
+
+  function editPostServer(id, post) {
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open("PUT", "/editPost/" + id, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
+        }
+
+        if (xhr.status !== 200) {
+          reject(xhr.status + ': ' + xhr.statusText);
+        } else {
+          resolve(true);
+        }
+      };
+
+      xhr.send(post);
+    })
   }
 
   function getPostsLengthServer() {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "/getLength", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) return;
-
-      if (xhr.status !== 200) {
-        console.log(xhr.status + ': ' + xhr.statusText);
-      } else {
-        localStorage.setItem("length", xhr.responseText);
-        if (xhr.responseText <= 10) {
-          document.getElementsByClassName("morePhotos")[0].style.display = "none";
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", "/getLength", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
         }
-      }
-    };
-    xhr.send();
+
+        if (xhr.status !== 200) {
+          reject(xhr.status + ': ' + xhr.statusText);
+        } else {
+          resolve(xhr.responseText);
+        }
+      };
+      xhr.send();
+    })
   }
 
   function getFilteredLengthServer(filter) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/getFilteredLength", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) return;
-
-      if (xhr.status !== 200) {
-        console.log(xhr.status + ': ' + xhr.statusText);
-        loadFilterMsg("news");
-        document.getElementsByClassName("morePhotos")[0].style.display = "none";
-      } else {
-        localStorage.setItem("lengthFilter", xhr.responseText);
-        if (xhr.responseText <= 10) {
-          document.getElementsByClassName("morePhotos")[0].style.display = "none";
-        } else {
-          document.getElementsByClassName("morePhotos")[0].style.display = "block";
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "/getFilteredLength", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
         }
-      }
-    };
-    xhr.send(filter);
+
+        if (xhr.status !== 200) {
+          reject(xhr.status + ': ' + xhr.statusText);
+        } else {
+          resolve(xhr.responseText);
+        }
+      };
+      xhr.send(filter);
+    })
   }
 
   function deletePostServer(id) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("DELETE", "/removePost/" + parseInt(id), true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) return;
-
-      if (xhr.status !== 200) {
-        console.log(xhr.status + ': ' + xhr.statusText);
-      } else {
-        if (!flag) {
-          loadPostsServer(0, galleryView.postsAmount);
-          let length = parseInt(localStorage.getItem("length"));
-          localStorage.setItem("length", JSON.stringify(length - 1));
-          if (galleryView.postsAmount >= length - 1) {
-            moreButton.style.display = "none";
-          }
-        } else {
-          loadPostsServer(0, galleryView.postsAmount, localStorage.getItem("filters"));
-          let length = parseInt(localStorage.getItem("lengthFilter"));
-          localStorage.setItem("lengthFilter", JSON.stringify(length - 1));
-          if (galleryView.postsAmount >= length - 1) {
-            moreButton.style.display = "none";
-          }
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open("DELETE", "/removePost/" + parseInt(id), true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
         }
-      }
-    };
+        if (xhr.status !== 200) {
+          reject(xhr.status + ': ' + xhr.statusText);
+        } else {
+          resolve(true);
+        }
+      };
 
-    xhr.send();
+      xhr.send();
+    })
   }
 
   function likePostServer(id, user) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/likePost/" + parseInt(id) + '&' + user, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) return;
-
-      if (xhr.status !== 200) {
-        console.log(xhr.status + ': ' + xhr.statusText);
-      } else {
-        let icon = "";
-        let i = parseInt(localStorage.getItem("toLike"));
-        let length = parseInt(likeButton[i].children[1].innerHTML);
-
-        if (xhr.responseText === "true") {
-          icon = "img/like.png";
-          likeButton[i].children[1].innerHTML = length + 1;
-        }
-        if (xhr.responseText === "false"){
-          icon = "img/noLike.png";
-          likeButton[i].children[1].innerHTML = length - 1;
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "/likePost/" + parseInt(id) + '&' + user, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
         }
 
-        likeButton[i].firstChild.src = icon;
-      }
-    };
+        if (xhr.status !== 200) {
+          reject(xhr.status + ': ' + xhr.statusText);
+        } else {
+          resolve(xhr.responseText);
+        }
+      };
 
-    xhr.send();
+      xhr.send();
+    })
   }
 
   function loadFilterMsg(className) {
@@ -431,7 +584,10 @@
 
   function moreButtonAddHandler() {
     moreButton = document.getElementsByClassName("morePhotos")[0];
-    moreButton.addEventListener("click", moreShow);
+    moreButton.addEventListener("click", function (e) {
+      moreShow()
+        .catch(err => console.log(err));
+    });
   }
 
   function quitAddHandler() {
@@ -442,8 +598,9 @@
   function deleteAddHandler() {
     deleteButton = document.getElementsByClassName("delete");
     for (let i = 0; i < deleteButton.length; i++) {
-      deleteButton[i].addEventListener("click", function(e) {
-        deletePhoto(i);
+      deleteButton[i].addEventListener("click", function (e) {
+        deletePhoto(i)
+          .catch(err => console.log(err));
       });
     }
   }
@@ -451,8 +608,10 @@
   function likeAddHandler() {
     likeButton = document.getElementsByClassName("like");
     for (let i = 0; i < galleryView.postsAmount; i++) {
-      likeButton[i].addEventListener("click", function(e) {
-        like(i);
+      likeButton[i].addEventListener("click", function (e) {
+        like(i)
+          .catch(err =>
+            console.log(err));
       });
     }
   }
@@ -471,8 +630,10 @@
   function editAddHandler() {
     editButton = document.getElementsByClassName("edit");
     for (let i = 0; i < editButton.length; i++) {
-      editButton[i].addEventListener("click", function(e) {
-        edit(i);
+      editButton[i].addEventListener("click", function (e) {
+        edit(i)
+          .catch(err =>
+            console.log(err));
       });
     }
   }

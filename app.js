@@ -1,32 +1,32 @@
 const express = require('express');
+
 const app = express();
-const fs = require("fs");
+const fs = require('fs');
 const bodyParser = require('body-parser');
-const posts = require("./public/js/galleryModel.js");
-const jsonFile = "server/data/posts.json";
+const posts = require('./public/js/galleryModel.js');
+
+const jsonFile = 'server/data/posts.json';
 const multer = require('multer');
 
-let storage = multer.diskStorage({
-  destination: function (req, file, callback) {
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
     callback(null, __dirname + '/public/img/tmp');
   },
-  filename: function (req, file, callback) {
-    let filename = file.fieldname + '-' + Date.now() + '-' + file.originalname;
+  filename: (req, file, callback) => {
+    const filename = file.fieldname + '-' + Date.now() + '-' + file.originalname;
     callback(null, filename);
   }
 });
 
-const upload = multer({
-  storage: storage
-});
+const upload = multer({ storage });
 
 app.use(bodyParser.json());
 app.use('/public', express.static('public'));
 
 app.get('/getPost/:id', (req, res) => {
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
-  let photoPost = posts.galleryModel.getPhotoPost(allPosts, req.params.id);
+  const photoPost = posts.galleryModel.getPhotoPost(allPosts, req.params.id);
 
   if (photoPost && !photoPost.isDeleted) {
     res.send(photoPost);
@@ -37,7 +37,7 @@ app.get('/getPost/:id', (req, res) => {
 });
 
 app.get('/getMaxID', (req, res) => {
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
   if (allPosts !== null) {
     let id = 0;
@@ -65,12 +65,12 @@ app.post('/uploadImage', upload.single('file'), (req, res) => {
 });
 
 app.post('/add', (req, res) => {
-  let post = req.body;
+  const post = req.body;
   post.createdAt = new Date();
   post.isDeleted = false;
   post.likes = [];
 
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
   if (posts.galleryModel.addPhotoPost(allPosts, post)) {
     fs.writeFileSync(jsonFile, JSON.stringify(allPosts));
@@ -82,12 +82,12 @@ app.post('/add', (req, res) => {
 });
 
 app.post('/getPosts', (req, res) => {
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
   let postsFilt;
-  let filterConfig = req.body;
+  const filterConfig = req.body;
 
-  if ("author" in filterConfig || "createdAt" in filterConfig ||
-    "hashtags" in filterConfig) {
+  if ('author' in filterConfig || 'createdAt' in filterConfig ||
+    'hashtags' in filterConfig) {
     postsFilt = posts.galleryModel.getPhotoPosts(allPosts, req.query.skip, req.query.top, filterConfig);
   } else {
     postsFilt = posts.galleryModel.getPhotoPosts(allPosts, req.query.skip, req.query.top);
@@ -102,9 +102,9 @@ app.post('/getPosts', (req, res) => {
 });
 
 app.post('/getFilteredLength', (req, res) => {
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
-  let filter = req.body;
-  let postsFilt = posts.galleryModel.getPhotoPosts(allPosts, 0, allPosts.length, filter);
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const filter = req.body;
+  const postsFilt = posts.galleryModel.getPhotoPosts(allPosts, 0, allPosts.length, filter);
 
   if (postsFilt.length >= 0) {
     res.statusCode = 200;
@@ -115,7 +115,7 @@ app.post('/getFilteredLength', (req, res) => {
 });
 
 app.put('/editPost/:id', (req, res) => {
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
   if (posts.galleryModel.editPhotoPost(allPosts, req.params.id, req.body)) {
     fs.writeFileSync(jsonFile, JSON.stringify(allPosts));
@@ -124,33 +124,30 @@ app.put('/editPost/:id', (req, res) => {
   } else {
     res.status(400).end();
   }
-
 });
 
 app.delete('/removePost/:id', (req, res) => {
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
 
   if (posts.galleryModel.removePhotoPost(allPosts, req.params.id)) {
     fs.writeFileSync(jsonFile, JSON.stringify(allPosts));
 
-    res.status(200).end()
+    res.status(200).end();
   } else {
     res.status(400).end();
   }
 });
 
 app.post('/likePost/:id&:user', (req, res) => {
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
-  let flag = posts.galleryModel.likePost(allPosts, req.params.id, req.params.user);
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const flag = posts.galleryModel.likePost(allPosts, req.params.id, req.params.user);
   fs.writeFileSync(jsonFile, JSON.stringify(allPosts));
   res.send(flag);
 });
 
 app.get('/getLength', (req, res) => {
-  let allPosts = JSON.parse(fs.readFileSync(jsonFile));
-  let array = allPosts.filter(function (photoPost) {
-    return photoPost.isDeleted === false
-  });
+  const allPosts = JSON.parse(fs.readFileSync(jsonFile));
+  const array = allPosts.filter(photoPost => photoPost.isDeleted === false);
 
   if (array.length !== 0) {
     res.send(JSON.stringify(array.length));
@@ -166,4 +163,4 @@ app.use((req, res) => {
   });
 });
 
-app.listen(3000, () => console.log("Server is working!"));
+app.listen(3000, () => console.log('Server is working!'));

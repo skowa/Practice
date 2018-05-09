@@ -1,59 +1,22 @@
-;
-(function (exp) {
-  exp.getPhotoPosts = function getPhotoPosts(givenArray, skip, top, filterConfig) {
-    let newPhotoPosts = [];
-    let array = givenArray.filter(function (photoPost) {
-      return photoPost.isDeleted === false
-    });
-    if (skip < 0 || skip >= array.length || skip === undefined) {
-      skip = 0;
-    }
-
-    if (top < 0 || top === undefined) {
-      top = 10;
-    }
-
-    let flag = false;
-    if (filterConfig !== undefined) {
-      if ("author" in filterConfig && filterConfig.author !== null) {
-        newPhotoPosts = array.filter(function (photoPost) {
-          return photoPost.author === filterConfig.author
-        });
-        flag = true;
-      }
-
-      if ("hashtags" in filterConfig && filterConfig.hashtags !== null) {
-        if (!flag) {
-          newPhotoPosts = filterByHashTags(array, filterConfig.hashtags);
-          flag = true;
-        } else {
-          newPhotoPosts = filterByHashTags(newPhotoPosts, filterConfig.hashtags);
-        }
-      }
-
-      if ("createdAt" in filterConfig && filterConfig.createdAt !== null) {
-        if (!flag) {
-          newPhotoPosts = array.filter(function (photoPost) {
-            return new Date(photoPost.createdAt) <= new Date(filterConfig.createdAt)
-          });
-        } else {
-          newPhotoPosts = newPhotoPosts.filter(function (photoPost) {
-            return new Date(photoPost.createdAt) <= new Date(filterConfig.createdAt)
-          });
-        }
-      }
-      newPhotoPosts = sortByDate(newPhotoPosts).slice(skip, skip + top);
-    } else {
-      newPhotoPosts = sortByDate(array).slice(skip, skip + top);
-    }
-
-    return newPhotoPosts;
+((exp) => {
+  function sortByDate(array) {
+    return array.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   }
 
-  function sortByDate(array) {
-    return array.sort(function (a, b) {
-      return new Date(b.createdAt) - new Date(a.createdAt)
-    });
+  function findHashTag(array, hashtag) {
+    if (array === null || hashtag === undefined) {
+      return [];
+    }
+
+    const newArray = [];
+
+    for (let j = 0; j < array.length; j++) {
+      if (array[j].hashtags.indexOf(hashtag) !== -1) {
+        newArray.push(array[j]);
+      }
+    }
+
+    return newArray;
   }
 
   function filterByHashTags(array, hashtags) {
@@ -70,21 +33,49 @@
     return newArray;
   }
 
-  function findHashTag(array, hashtag) {
-    if (array === null || hashtag === undefined) {
-      return [];
+  exp.getPhotoPosts = function getPhotoPosts(givenArray, skip, top, filterConfig) {
+    let newPhotoPosts = [];
+    const array = givenArray.filter(photoPost => photoPost.isDeleted === false);
+    if (skip < 0 || skip >= array.length || skip === undefined) {
+      skip = 0;
     }
 
-    let newArray = [];
+    if (top < 0 || top === undefined) {
+      top = 10;
+    }
 
-    for (let j = 0; j < array.length; j++) {
-      if (array[j].hashtags.indexOf(hashtag) !== -1) {
-        newArray.push(array[j]);
+    let flag = false;
+    if (filterConfig !== undefined) {
+      if ('author' in filterConfig && filterConfig.author !== null) {
+        newPhotoPosts = array.filter(photoPost => photoPost.author === filterConfig.author);
+        flag = true;
       }
+
+      if ('hashtags' in filterConfig && filterConfig.hashtags !== null) {
+        if (!flag) {
+          newPhotoPosts = filterByHashTags(array, filterConfig.hashtags);
+          flag = true;
+        } else {
+          newPhotoPosts = filterByHashTags(newPhotoPosts, filterConfig.hashtags);
+        }
+      }
+
+      if ('createdAt' in filterConfig && filterConfig.createdAt !== null) {
+        if (!flag) {
+          newPhotoPosts = array.filter(photoPost => new Date(photoPost.createdAt)
+           <= new Date(filterConfig.createdAt));
+        } else {
+          newPhotoPosts = newPhotoPosts.filter(photoPost => new Date(photoPost.createdAt)
+           <= new Date(filterConfig.createdAt));
+        }
+      }
+      newPhotoPosts = sortByDate(newPhotoPosts).slice(skip, skip + top);
+    } else {
+      newPhotoPosts = sortByDate(array).slice(skip, skip + top);
     }
 
-    return newArray;
-  }
+    return newPhotoPosts;
+  };
 
   exp.getPhotoPost = function getPhotoPost(array, id) {
     if (id === undefined) {
@@ -98,7 +89,7 @@
     }
 
     return null;
-  }
+  };
 
   function validatePhotoPost(photoPost) {
     if (photoPost.id === undefined) {
@@ -141,19 +132,17 @@
   }
 
   exp.likePost = function likePost(allPosts, id, user) {
-    let post = allPosts.find(post => Number(post.id) === Number(id));
-    let index = post.likes.indexOf(user);
+    const post = allPosts.find(_post => Number(_post.id) === Number(id));
+    const index = post.likes.indexOf(user);
 
     if (index === -1) {
       post.likes.push(user);
       return true;
-    } else {
-      post.likes.splice(index, 1);
-      return false;
     }
 
+    post.likes.splice(index, 1);
     return false;
-  }
+  };
 
   exp.addPhotoPost = function addPhotoPost(array, photoPost) {
     if (photoPost === undefined ||
@@ -163,14 +152,14 @@
 
     array.push(photoPost);
     return true;
-  }
+  };
 
   exp.editPhotoPost = function editPhotoPost(array, id, photoPost) {
     if (id === undefined || photoPost === undefined) {
       return false;
     }
 
-    let editedPhotoPost = array.find(post => Number(post.id) === Number(id));
+    const editedPhotoPost = array.find(post => Number(post.id) === Number(id));
     if (editedPhotoPost === null) {
       return false;
     }
@@ -208,20 +197,20 @@
     }
 
     return false;
-
-  }
+  };
 
   exp.removePhotoPost = function removePhotoPost(array, id) {
     if (id === undefined) {
       return false;
     }
 
-    for (let i = 0; i < array.length; i++)
+    for (let i = 0; i < array.length; i++) {
       if (String(array[i].id) === id) {
         array[i].isDeleted = true;
         return true;
       }
+    }
 
     return false;
-  }
-}(this.galleryModel = {}));
+  };
+})(this.galleryModel = {});

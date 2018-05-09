@@ -1,14 +1,13 @@
-;
-(function (arr) {
+((arr) => {
   arr.postsAmount = 0;
 
   arr.createMain = function createMenu() {
-    let content = document.getElementsByClassName("wrapperContent")[0];
-    let news = document.createElement("div");
-    news.className = "news";
+    const content = document.getElementsByClassName('wrapperContent')[0];
+    const news = document.createElement('div');
+    news.className = 'news';
     content.appendChild(news);
-    let filtr = document.createElement("div");
-    filtr.className = "filtr";
+    const filtr = document.createElement('div');
+    filtr.className = 'filtr';
     filtr.innerHTML = `
     <form>
         Дата: <br>
@@ -20,39 +19,39 @@
         </form>
         <input id="OK" type="submit" value="OK" />`;
     news.appendChild(filtr);
-    let photos = document.createElement("div");
-    photos.className = "photos";
+    const photos = document.createElement('div');
+    photos.className = 'photos';
     news.appendChild(photos);
-    let button = document.createElement("div");
-    button.innerHTML = "<button class=\"morePhotos\" title=\"more\"><p>Загрузить следующие фото</p></button>";
+    const button = document.createElement('div');
+    button.innerHTML = '<button class="morePhotos" title="more"><p>Загрузить следующие фото</p></button>';
     news.appendChild(button);
-  }
+  };
 
   arr.fillHeader = function fillHeader() {
-    let user = localStorage.getItem("user");
+    const user = localStorage.getItem('user');
 
-    let isUser = (user !== null);
+    const isUser = (user !== null);
 
-    document.getElementsByClassName("header")[0].innerHTML = `<h1 class="logo">PHOTOGALLERY</h1>`;
+    document.getElementsByClassName('header')[0].innerHTML = '<h1 class="logo">PHOTOGALLERY</h1>';
     if (isUser) {
-      document.getElementsByClassName("header")[0].innerHTML += `
+      document.getElementsByClassName('header')[0].innerHTML += `
               <p class="authorsName">@` + user + `</p>
               <button class="quit"><p>ВЫЙТИ</p></button>
               <button class="addPhotoIcon"> </button>`;
     } else {
-      document.getElementsByClassName("header")[0].innerHTML += `<button class="quit"><p>ВОЙТИ</p></button>`;
+      document.getElementsByClassName('header')[0].innerHTML += '<button class="quit"><p>ВОЙТИ</p></button>';
     }
-  }
+  };
 
   arr.clearMain = function clearMain() {
-    let content = document.getElementsByClassName("wrapperContent")[0];
-    content.innerHTML = "";
-  }
+    const content = document.getElementsByClassName('wrapperContent')[0];
+    content.innerHTML = '';
+  };
 
   arr.createLogin = function createLogin() {
-    let content = document.getElementsByClassName("wrapperContent")[0];
-    let formAuth = document.createElement("div");
-    formAuth.className = "authorizeForm";
+    const content = document.getElementsByClassName('wrapperContent')[0];
+    const formAuth = document.createElement('div');
+    formAuth.className = 'authorizeForm';
     formAuth.innerHTML = `
     <form class="formLog">
         Логин: <br>
@@ -62,66 +61,105 @@
         </form>
         <input id="OK2" type="submit" value="OK">`;
     content.appendChild(formAuth);
+  };
 
+  function getFormatDate(post) {
+    let date;
+    if (post !== undefined) {
+      date = new Date(post.createdAt);
+    } else {
+      date = new Date();
+    }
+
+    let day = date.getDate();
+    if (day < 10) day = '0' + day;
+
+    let month = date.getMonth() + 1;
+    if (month < 10) month = '0' + month;
+
+    const year = date.getFullYear();
+
+    return day + '.' + month + '.' + year;
+  }
+
+  function getFormatTime(post) {
+    let date;
+    if (post !== undefined) {
+      date = new Date(post.createdAt);
+    } else {
+      date = new Date();
+    }
+
+    let hours = date.getHours();
+    if (hours < 10) {
+      hours = '0' + hours;
+    }
+
+    let minutes = date.getMinutes();
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+
+    return hours + ':' + minutes;
   }
 
   arr.createAddAndEdit = function createAddAndEdit(post) {
-    let content = document.getElementsByClassName("wrapperContent")[0];
+    const content = document.getElementsByClassName('wrapperContent')[0];
 
-    let photoLoad = document.createElement("div");
-    photoLoad.className = "photoLoad";
+    const photoLoad = document.createElement('div');
+    photoLoad.className = 'photoLoad';
     content.appendChild(photoLoad);
 
-    let dropArea = document.createElement('div');
+    const dropArea = document.createElement('div');
     dropArea.className = 'dropArea';
 
-    let dropAreaText = document.createElement("p");
-    dropAreaText.innerHTML = "DRUG & DROP AREA";
+    const dropAreaText = document.createElement('p');
+    dropAreaText.innerHTML = 'DRUG & DROP AREA';
 
     dropArea.appendChild(dropAreaText);
 
-    let imgDropArea = document.createElement('img');
+    const imgDropArea = document.createElement('img');
     if (post) {
       imgDropArea.setAttribute('src', post.photoLink);
     } else {
-      imgDropArea.setAttribute('src', "img/question.png");
+      imgDropArea.setAttribute('src', 'img/question.png');
     }
 
     dropArea.appendChild(imgDropArea);
 
-    dropArea.addEventListener("dragover", function (event) {
+    dropArea.addEventListener('dragover', (event) => {
       event.preventDefault();
     }, false);
 
-    dropArea.addEventListener("drop", function (event) {
+    dropArea.addEventListener('drop', (event) => {
       event.preventDefault();
 
-      let files = event.dataTransfer.files;
+      const files = event.dataTransfer.files;
       galleryController.loadImage(files[0])
-        .then(response => {
+        .then((response) => {
           galleryController.flagPhoto = true;
-          localStorage.setItem("photolink", response);
+          localStorage.setItem('photolink', response);
         })
-        .catch(error => alert(error));
-      let reader = new FileReader();
+        .catch(error => console.log(error));
+      const reader = new FileReader();
       reader.readAsDataURL(files[0]);
-      reader.onloadend = function () {
+      reader.onloadend = () => {
         imgDropArea.setAttribute('src', reader.result);
       };
     }, false);
 
     content.appendChild(dropArea);
 
-    let photoAdd = document.createElement("div");
-    photoAdd.className = "photoAdd";
+    const photoAdd = document.createElement('div');
+    photoAdd.className = 'photoAdd';
 
-    let user = localStorage.getItem("user") || null;
+    const user = localStorage.getItem('user') || null;
 
     if (post !== undefined) {
       photoAdd.innerHTML = `
       <h1>@` + post.author + `</h1>
       <form>
-        <h3>` + post.createdAt.substring(0, post.createdAt.length - 5) + `<br />` + post.createdAt.substring(post.createdAt.length - 5) + `</h3>
+        <h3>` + post.createdAt.substring(0, post.createdAt.length - 5) + '<br />' + post.createdAt.substring(post.createdAt.length - 5) + `</h3>
         <p>
           Описание:
         </p>
@@ -136,7 +174,7 @@
       photoAdd.innerHTML = `
       <h1>@` + user + `</h1>
       <form>
-        <h3>` + getFormatDate() + `<br />` + getFormatTime() + `</h3>
+        <h3>` + getFormatDate() + '<br />' + getFormatTime() + `</h3>
         <p>
           Описание:
         </p>
@@ -150,99 +188,60 @@
     }
 
     content.appendChild(photoAdd);
-  }
+  };
 
   arr.show = function showPhotoPost(post, position) {
-    let user = localStorage.getItem("user") || null;
-    let isUser = (user === post.author);
+    const user = localStorage.getItem('user') || null;
+    const isUser = (user === post.author);
 
-    let photo = document.createElement("div");
-    photo.className = "photo";
-    let photoImg = document.createElement("div");
-    photoImg.className = "photoImg";
-    photoImg.innerHTML = "<img src=\"" + post.photoLink + "\" alt=\"\">";
+    const photo = document.createElement('div');
+    photo.className = 'photo';
+    const photoImg = document.createElement('div');
+    photoImg.className = 'photoImg';
+    photoImg.innerHTML = '<img src="' + post.photoLink + '" alt="">';
 
-    let contentPhoto = document.createElement("div");
-    contentPhoto.className = "contentPhoto";
-    photo.id = "post" + post.id;
+    const contentPhoto = document.createElement('div');
+    contentPhoto.className = 'contentPhoto';
+    photo.id = 'post' + post.id;
     if (isUser) {
       contentPhoto.innerHTML = `
       <h1>Ваша публикация</h1>
-        <h3>` + getFormatDate(post) + `<br />` + getFormatTime(post) + `</h3>
+        <h3>` + getFormatDate(post) + '<br />' + getFormatTime(post) + `</h3>
         <p class="photoDescription">` + post.description + `</p>
-        <p class="photoTags">` + post.hashtags.join(", ") + `</p>
+        <p class="photoTags">` + post.hashtags.join(', ') + `</p>
         <button class="delete"></button>
         <button class="edit"></button>`;
     } else {
-      contentPhoto.innerHTML = `<h1>@` + post.author + `</h1>
-        <h3>` + getFormatDate(post) + `<br />` + getFormatTime(post) + `</h3>
-        <p class=\"photoDescription\">` + post.description + `</p>
-        <p class=\"photoTags\">` + post.hashtags.join(", ") + `</p>`;
+      contentPhoto.innerHTML = '<h1>@' + post.author + `</h1>
+        <h3>` + getFormatDate(post) + '<br />' + getFormatTime(post) + `</h3>
+        <p class="photoDescription">` + post.description + `</p>
+        <p class="photoTags">` + post.hashtags.join(', ') + '</p>';
     }
 
     if (post.likes.indexOf(user) === -1) {
       contentPhoto.innerHTML += `<div class="like"><img src="img/noLike.png">
-      <p>` + post.likes.length + `</p></div>`;
+      <p>` + post.likes.length + '</p></div>';
     } else {
       contentPhoto.innerHTML += `<div class="like"><img src="img/like.png">
-      <p>` + post.likes.length + `</p></div>`;
+      <p>` + post.likes.length + '</p></div>';
     }
 
     photo.appendChild(contentPhoto);
     photo.appendChild(photoImg);
 
-    let photos = document.getElementsByClassName("photos")[0];
+    const photos = document.getElementsByClassName('photos')[0];
     photos.insertBefore(photo, photos.children[position]);
-  }
-
-  function getFormatDate(post) {
-    let date;
-    if (post !== undefined) {
-      date = new Date(post.createdAt);
-    } else {
-      date = new Date();
-    }
-
-    let day = date.getDate();
-    if (day < 10) day = "0" + day;
-
-    let month = date.getMonth() + 1;
-    if (month < 10) month = "0" + month;
-
-    let year = date.getFullYear();
-
-    return day + "." + month + "." + year;
-  }
-
-  function getFormatTime(post) {
-    let date;
-    if (post !== undefined) {
-      date = new Date(post.createdAt);
-    } else {
-      date = new Date();
-    }
-
-    let hours = date.getHours();
-    if (hours < 10)
-      hours = "0" + hours;
-
-    let minutes = date.getMinutes();
-    if (minutes < 10)
-      minutes = "0" + minutes;
-
-    return hours + ":" + minutes;
-  }
+  };
 
   arr.showPosts = function showPosts(allPosts, skip, top, filterConfig) {
     arr.postsAmount = 0;
-    document.body.getElementsByClassName("photos")[0].innerHTML = "";
+    document.body.getElementsByClassName('photos')[0].innerHTML = '';
 
-    let photoPosts = galleryModel.getPhotoPosts(allPosts, skip, top, filterConfig);
+    const photoPosts = galleryModel.getPhotoPosts(allPosts, skip, top, filterConfig);
 
     for (let i = 0; i < photoPosts.length; i++) {
       arr.show(photoPosts[i], i);
       ++arr.postsAmount;
     }
-
-  }
+  };
 })(this.galleryView = {});

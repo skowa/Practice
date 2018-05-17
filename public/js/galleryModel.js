@@ -45,7 +45,7 @@
     }
 
     let flag = false;
-    if (filterConfig !== undefined) {
+    if (filterConfig && Object.keys(filterConfig).length !== 0) {
       if ('author' in filterConfig && filterConfig.author !== null) {
         newPhotoPosts = array.filter(photoPost => photoPost.author === filterConfig.author);
         flag = true;

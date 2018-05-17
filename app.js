@@ -83,15 +83,9 @@ app.post('/add', (req, res) => {
 
 app.post('/getPosts', (req, res) => {
   const allPosts = JSON.parse(fs.readFileSync(jsonFile));
-  let postsFilt;
   const filterConfig = req.body;
 
-  if ('author' in filterConfig || 'createdAt' in filterConfig ||
-    'hashtags' in filterConfig) {
-    postsFilt = posts.galleryModel.getPhotoPosts(allPosts, req.query.skip, req.query.top, filterConfig);
-  } else {
-    postsFilt = posts.galleryModel.getPhotoPosts(allPosts, req.query.skip, req.query.top);
-  }
+  const postsFilt = posts.galleryModel.getPhotoPosts(allPosts, req.query.skip, req.query.top, filterConfig);
 
   if (postsFilt) {
     res.statusCode = 200;

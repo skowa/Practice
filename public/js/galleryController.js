@@ -35,6 +35,50 @@
     });
   };
 
+  async function logIn(login, password) {
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+
+      xhr.open('POST', '/login', true);
+      xhr.setRequestHeader('Content-type', 'application/json');
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
+        }
+        if (xhr.status !== 200) {
+          console.log(`${xhr.status}: ${xhr.responseText || xhr.statusText}`);
+          reject(new Error(xhr.responseText));
+        } else {
+          resolve(xhr.responseText);
+        }
+      };
+
+      xhr.send(JSON.stringify({ username: login, password }));
+    });
+}
+
+  async function logOut() {
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', '/logout', true);
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
+        }
+        if (xhr.status !== 200) {
+          console.log(`${xhr.status}: ${xhr.responseText || xhr.statusText}`);
+          reject(new Error(xhr.responseText));
+        } else {
+          resolve(xhr.responseText);
+        }
+      };
+
+      xhr.send();
+    });
+  }
+
   function loadPostsServer(skip, top, _filter) {
     skip = skip || 0;
     top = top || 10;
@@ -308,19 +352,21 @@
     }
   }
 
-  function authorize() {
+  async function authorize() {
     const msg = document.getElementById('message');
     if (msg) {
       document.getElementsByClassName('formLog')[0].removeChild(msg);
     }
     const name = document.getElementById('wrLogin').value || null;
     const password = document.getElementById('wrPassword').value || null;
-    if (name && password) {
+    const result = await logIn(name, password);
+    if (result === 'false') {
+      errorMsg('formLog');
+    }
+    else {
       localStorage.setItem('user', name);
       galleryView.clearMain();
       galleryController.startWork();
-    } else {
-      errorMsg('formLog');
     }
   }
 
@@ -356,13 +402,13 @@
     }
   }
 
-  function log() {
+  async function log() {
     let user = localStorage.getItem('user') || null;
 
     if (user !== null) {
       user = null;
       localStorage.removeItem('user');
-
+      await logOut();
       galleryView.clearMain();
       galleryController.startWork();
     } else {
@@ -386,6 +432,9 @@
     let tagFilter = null;
     if (tag !== null) {
       tagFilter = tag.split(' ') || null;
+    }
+    for (let i = 0; i < tagFilter.length; i++) {
+      tagFilter[i] = '#' + tagFilter[i];
     }
     const dateFilter = (date) ? new Date(date) : null;
 
@@ -617,7 +666,7 @@
 
   exp.startWork = function startWork() {
     galleryView.fillHeader();
-    if (document.getElementsByClassName('errorPic')[0] === undefined) {
+    if (!document.getElementsByClassName('errorPic')[0]) {
       galleryView.createMain();
       loadPosts()
         .catch(err => console.log(err));

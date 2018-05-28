@@ -57,7 +57,7 @@
         Логин: <br>
         <input id="wrLogin" type="text" name="wrLogin" placeholder="Введите логин">
         <br>Пароль: <br>
-        <input id="wrPassword" type="text" name="wrPassword" placeholder="Введите пароль">
+        <input id="wrPassword" type="password" name="wrPassword" placeholder="Введите пароль">
         </form>
         <input id="OK2" type="submit" value="OK">`;
     content.appendChild(formAuth);
@@ -65,17 +65,21 @@
 
   function getFormatDate(post) {
     let date;
-    if (post !== undefined) {
+    if (post) {
       date = new Date(post.createdAt);
     } else {
       date = new Date();
     }
 
     let day = date.getDate();
-    if (day < 10) day = '0' + day;
+    if (day < 10) {
+      day = '0' + day;
+    }
 
     let month = date.getMonth() + 1;
-    if (month < 10) month = '0' + month;
+    if (month < 10) {
+      month = '0' + month;
+    }
 
     const year = date.getFullYear();
 
@@ -84,7 +88,7 @@
 
   function getFormatTime(post) {
     let date;
-    if (post !== undefined) {
+    if (post) {
       date = new Date(post.createdAt);
     } else {
       date = new Date();
@@ -155,7 +159,7 @@
 
     const user = localStorage.getItem('user') || null;
 
-    if (post !== undefined) {
+    if (post) {
       photoAdd.innerHTML = `
       <h1>@` + post.author + `</h1>
       <form>

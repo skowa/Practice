@@ -4,7 +4,7 @@
   }
 
   function findHashTag(array, hashtag) {
-    if (array === null || hashtag === undefined) {
+    if (array === null || !hashtag) {
       return [];
     }
 
@@ -20,7 +20,7 @@
   }
 
   function filterByHashTags(array, hashtags) {
-    if (hashtags === undefined || hashtags === null ||
+    if (!hashtags || hashtags === null ||
       hashtags.length === 0) {
       return [];
     }
@@ -36,11 +36,11 @@
   exp.getPhotoPosts = function getPhotoPosts(givenArray, skip, top, filterConfig) {
     let newPhotoPosts = [];
     const array = givenArray.filter(photoPost => photoPost.isDeleted === false);
-    if (skip < 0 || skip >= array.length || skip === undefined) {
+    if (skip < 0 || skip >= array.length || !skip) {
       skip = 0;
     }
 
-    if (top < 0 || top === undefined) {
+    if (top < 0 || !top) {
       top = 10;
     }
 
@@ -78,7 +78,7 @@
   };
 
   exp.getPhotoPost = function getPhotoPost(array, id) {
-    if (id === undefined) {
+    if (!id) {
       return null;
     }
 
@@ -92,25 +92,25 @@
   };
 
   function validatePhotoPost(photoPost) {
-    if (photoPost.id === undefined) {
+    if (!photoPost.id) {
       return false;
     }
-    if (photoPost.description === undefined) {
+    if (!photoPost.description) {
       return false;
     }
-    if (photoPost.author === undefined) {
+    if (!photoPost.author) {
       return false;
     }
-    if (photoPost.createdAt === undefined) {
+    if (!photoPost.createdAt) {
       return false;
     }
-    if (photoPost.hashtags === undefined) {
+    if (!photoPost.hashtags) {
       return false;
     }
-    if (photoPost.likes === undefined) {
+    if (!photoPost.likes) {
       return false;
     }
-    if (photoPost.photoLink === undefined) {
+    if (!photoPost.photoLink) {
       return false;
     }
 
@@ -145,7 +145,7 @@
   };
 
   exp.addPhotoPost = function addPhotoPost(array, photoPost) {
-    if (photoPost === undefined ||
+    if (!photoPost ||
       !validatePhotoPost(photoPost)) {
       return false;
     }
@@ -155,7 +155,7 @@
   };
 
   exp.editPhotoPost = function editPhotoPost(array, id, photoPost) {
-    if (id === undefined || photoPost === undefined) {
+    if (!id || !photoPost) {
       return false;
     }
 
@@ -178,15 +178,15 @@
       return false;
     }
 
-    if (photoPost.description !== undefined) {
+    if (photoPost.description) {
       editedPhotoPost.description = photoPost.description;
       flag = true;
     }
-    if (photoPost.photoLink !== undefined) {
+    if (photoPost.photoLink) {
       editedPhotoPost.photoLink = photoPost.photoLink;
       flag = true;
     }
-    if (photoPost.hashtags !== undefined) {
+    if (photoPost.hashtags) {
       editedPhotoPost.hashtags = photoPost.hashtags;
       flag = true;
     }
@@ -200,7 +200,7 @@
   };
 
   exp.removePhotoPost = function removePhotoPost(array, id) {
-    if (id === undefined) {
+    if (!id) {
       return false;
     }
 

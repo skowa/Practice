@@ -7,6 +7,12 @@ const posts = require('./public/js/galleryModel.js');
 
 const jsonFile = 'server/data/posts.json';
 const multer = require('multer');
+const passport = require('passport');
+const JsonStrategy = require('passport-json').Strategy;
+// const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const authorization = require('./authorization.js');
+const mongoose = require('mongoose');
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -22,6 +28,54 @@ const upload = multer({ storage });
 
 app.use(bodyParser.json());
 app.use('/public', express.static('public'));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new JsonStrategy(async function (username, password, done) {
+  try {
+    let user = await authorization.checkPassword(username, password);
+    if (user) {
+      return done(null, user);
+    }
+    return done(null, false);
+  } catch (error) {
+    return done(error);
+  }
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+async function connectToDataBase() {
+  try {
+    await mongoose.connect('mongodb://localhost:27017/photoPostsData');
+    console.log('Successfully connected');
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+passport.deserializeUser((id, done) => {
+  console.log('deserializeUser method worked');
+  authorization.Users.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
+app.post('/login', passport.authenticate('json', { failureRedirect: '/loginfail' }), async (req, res) => {
+  res.redirect('/');
+});
+
+app.get('/loginfail', async (req, res) => {
+  res.status(200).send(false);
+});
+
+app.get('/logout', async (req, res) => {
+  req.logout();
+  res.status(200).send(true);
+});
+
 
 app.get('/getPost/:id', (req, res) => {
   const allPosts = JSON.parse(fs.readFileSync(jsonFile));
@@ -158,3 +212,6 @@ app.use((req, res) => {
 });
 
 app.listen(3000, () => console.log('Server is working!'));
+connectToDataBase();
+ authorization.cleanDataBase();
+  authorization.fillDataBase();

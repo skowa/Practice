@@ -432,9 +432,10 @@
     let tagFilter = null;
     if (tag !== null) {
       tagFilter = tag.split(' ') || null;
-    }
-    for (let i = 0; i < tagFilter.length; i++) {
-      tagFilter[i] = '#' + tagFilter[i];
+      
+      for (let i = 0; i < tagFilter.length; i++) {
+        tagFilter[i] = '#' + tagFilter[i];
+      }
     }
     const dateFilter = (date) ? new Date(date) : null;
 
